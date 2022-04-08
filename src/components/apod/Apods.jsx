@@ -7,7 +7,7 @@ function Apods() {
 	const [apods, setApod] = useState([])
   const [loading, setLoading] = useState(true)
   const getApods = async =>{
-    axios.get('https://api.nasa.gov/planetary/apod?count=10&api_key=DEMO_KEY')
+    axios.get('https://api.nasa.gov/planetary/apod?count=10&thumbs=true&api_key=DEMO_KEY')
     .then(function (response) {
       setApod(response.data)      
     })

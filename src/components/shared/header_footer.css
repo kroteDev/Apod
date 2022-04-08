@@ -81,10 +81,11 @@
 }
 .main-footer .logo-wrapper{
 	display: inline-block;
-	padding: 21px 15px;
+	padding: 25px 15px;
 	background-color: var(--bg-color);
 }
 .main-footer .logo-wrapper img{
 	height: 150px;
 	width: auto;
+	vertical-align: middle;
 }

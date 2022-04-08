@@ -11,21 +11,23 @@
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-	width: 50%;
+	width: 45%;
 }
 .apod .image-wrapper img{
-	height: 630px;
-	width: auto;
-	margin-left: -50px;
+	object-fit: cover;
+	width: 120%;
+	height: 100%;
+	margin-left: -10%;
 }
 .apod .image-wrapper figcaption{
 	text-indent: -9999px;
 }
 .apod .apod-info{
-	width: 50%;
+	width: 55%;
 	padding-top: 50px;
 	padding-left: 50px;
 	padding-right: 50px;
+	box-sizing: border-box;
 }
 .apod .apod-info h2{
 	margin-top: 0px;
@@ -46,7 +48,8 @@
 .apod .apod-info .meta p{
 	margin-right: 15px;
 	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-bottom: 15px;
+	min-width: 160px;
 }
 .apod .apod-info .meta p:last-child{
 	margin-right: 0px;

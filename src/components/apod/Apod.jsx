@@ -1,7 +1,9 @@
 import './apod.css'
 
 function Apod({ apod }) {
-	const apodId = apod.date.slice(2).replace(/-/g, "")
+	const apodId = apod.date.slice(2).replace(/-/g, "")	
+	const trim_explanation = (explanation) =>	explanation.length > 850 ? explanation.substring(0, 847) + "..." : explanation
+	
 	return (		
 		<article className="apod" key={apodId}>
 			<figure className="image-wrapper">
@@ -10,7 +12,7 @@ function Apod({ apod }) {
 			</figure>
 			<div className="apod-info">
 				<h2>{apod.title}</h2>
-				<p>{apod.explanation}</p>
+				<p>{trim_explanation(apod.explanation)}</p>
 				<div className="meta">
 					<p><label>Date: </label>{ new Date(apod.date).toLocaleDateString() }</p>
 					<p><label>Media Type: </label>{apod.media_type}</p>
