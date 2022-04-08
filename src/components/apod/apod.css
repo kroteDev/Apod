@@ -12,6 +12,7 @@
 	padding: 0px;
 	overflow: hidden;
 	width: 45%;
+	order: 1;
 }
 .apod .image-wrapper img{
 	object-fit: cover;
@@ -28,6 +29,7 @@
 	padding-left: 50px;
 	padding-right: 50px;
 	box-sizing: border-box;
+	order: 2;
 }
 .apod .apod-info h2{
 	margin-top: 0px;
@@ -92,4 +94,41 @@
 .apod .actions .download:hover, 
 .apod .actions .download:focus{
 	text-decoration: underline;	
+}
+
+.apod:nth-child(even) .image-wrapper{
+	order: 2;
+}
+.apod:nth-child(even) .apod-info{
+	order: 1;
+}
+.apod:nth-child(even) .actions{
+	right: auto;
+	left: 0;
+}
+
+@media only screen and (max-width: 1270px) {
+	.apod{
+		width: 100%;
+		height: auto;
+		flex-direction: column;
+		padding-bottom: 70px;
+	}
+	.apod .image-wrapper, 
+	.apod .apod-info{
+		width: 100%;
+	}
+	.apod:nth-child(even) .image-wrapper{
+		order: 1;
+	}
+	.apod:nth-child(even) .apod-info{
+		order: 2;
+	}
+	.apod:nth-child(even) .actions{
+		right: 0;
+		left: auto;
+	}
+	.apod .apod-info .meta{
+		flex-wrap: wrap;
+	}
 }

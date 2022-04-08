@@ -29,8 +29,8 @@ function Apods() {
 	if (loading) return <Loading />
 	return (
 		<>
-			{apods.map(apod => (
-				<Apod key={apod.date} apod={apod} />
+			{apods.map( (apod, index) => (
+				<Apod key={index} apod={apod} />
 			))}
 		</>
 	)

@@ -4,7 +4,7 @@ function Apod({ apod }) {
 	const apodId = apod.date.slice(2).replace(/-/g, "")	
 	const trim_explanation = (explanation) =>	explanation.length > 850 ? explanation.substring(0, 847) + "..." : explanation
 	
-	return (		
+	return (				
 		<article className="apod" key={apodId}>
 			<figure className="image-wrapper">
 				<img src={apod.media_type === "image" ? apod.url : apod.thumbnail_url} alt={apod.title} />
