@@ -1,0 +1,28 @@
+import './apod.css'
+
+function Apod({ apod }) {
+	const apodId = apod.date.slice(2).replace(/-/g, "")
+	return (		
+		<article className="apod" key={apodId}>
+			<figure className="image-wrapper">
+				<img src={apod.media_type === "image" ? apod.url : apod.thumbnail_url} alt={apod.title} />
+				<figcaption>{apod.title}</figcaption>
+			</figure>
+			<div className="apod-info">
+				<h2>{apod.title}</h2>
+				<p>{apod.explanation}</p>
+				<div className="meta">
+					<p><label>Date: </label>{ new Date(apod.date).toLocaleDateString() }</p>
+					<p><label>Media Type: </label>{apod.media_type}</p>
+					<p><label>Copyright: </label>{apod.copyright ? apod.copyright : 'None'}</p>
+				</div>				
+			</div>
+			<div className="actions">
+				<a href={`https://apod.nasa.gov/apod/ap${apodId}.html`} className='go-to' target="_blank" rel="noreferrer">Go To APOD</a>
+				<a href={apod.hdurl} className='download' target="_blank" rel="noreferrer">Download</a>
+			</div>
+		</article>
+	)
+}
+
+export default Apod

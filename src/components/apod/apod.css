@@ -1,0 +1,92 @@
+.apod{
+	background-color: var(--plain-white);
+	box-shadow: 0px 3px 6px #00000029;
+	overflow: hidden;
+	height: 600px;
+	margin-bottom: 60px;
+	display: flex;
+	position: relative;
+}
+.apod .image-wrapper{
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 50%;
+}
+.apod .image-wrapper img{
+	height: 630px;
+	width: auto;
+	margin-left: -50px;
+}
+.apod .image-wrapper figcaption{
+	text-indent: -9999px;
+}
+.apod .apod-info{
+	width: 50%;
+	padding-top: 50px;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+.apod .apod-info h2{
+	margin-top: 0px;
+	margin-bottom: 15px;
+	color: var(--header-color);
+	font-weight: 600;
+}
+.apod .apod-info > p{
+	margin-top: 0px;
+	margin-bottom: 15px;
+	font-size: 14px;
+	line-height: 25px;
+	color: var(--text-color);
+}
+.apod .apod-info .meta{
+	display: flex;
+}
+.apod .apod-info .meta p{
+	margin-right: 15px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.apod .apod-info .meta p:last-child{
+	margin-right: 0px;
+}
+.apod .apod-info .meta label{
+	color: var(--main-nav);
+	font-weight: 600;
+}
+.apod:last-child{
+	margin-bottom: 0px;
+}
+.apod .actions{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.apod .actions a{
+	display: inline-block;
+	padding: 15px 25px;
+	font-weight: 600;
+	font-size: 16;
+	border: 2px solid transparent;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: all 0.3s ease-in-out;
+}
+.apod .actions .go-to{
+	color: var(--main-nav);
+	border-color: var(--main-nav);
+	margin-right: 5px;
+}
+.apod .actions .go-to:hover,
+.apod .actions .go-to:focus{
+	text-decoration: underline;
+}
+.apod .actions .download{
+	background-color: var(--main-nav);
+	color: var(--plain-white);
+}
+.apod .actions .download:hover, 
+.apod .actions .download:focus{
+	text-decoration: underline;	
+}
