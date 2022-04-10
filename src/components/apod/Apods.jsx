@@ -7,31 +7,30 @@ function Apods() {
 	const [apods, setApod] = useState([])
   const [loading, setLoading] = useState(true)
   const getApods = async =>{
-    axios.get('https://api.nasa.gov/planetary/apod?count=10&thumbs=true&api_key=DEMO_KEY')
+    axios.get(`https://api.nasa.gov/planetary/apod?count=10&thumbs=true&api_key=${process.env.NODE_ENV !== 'production'? 'DEMO_KEY' : process.env.REACT_APP_APOD_KEY}`)
     .then(function (response) {
       setApod(response.data)      
     })
     .catch(function (error) {
       console.log(error)
     })
-    .then(function () {      
-			
+    .then(function () {			
 			setTimeout(() => {
 				setLoading(false)
-			}, 1500);
-			
+			}, 2000);			
     })
   }
 
   useEffect(() => {
-   getApods()
+   getApods()    
+   console.log()
   },[])
 	if (loading) return <Loading />
 	return (
-		<>
+		<>      
 			{apods.map( (apod, index) => (
-				<Apod key={index} apod={apod} />
-			))}
+				<Apod key={index} apod={apod} />        
+			))}      
 		</>
 	)
 }

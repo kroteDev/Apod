@@ -6,8 +6,7 @@
 	border-bottom: 4px solid var(--border-color);
 }
 .main-header .container{
-	display: flex;
-	flex-wrap: wrap;	
+	display: flex;	
 }
 .main-header .container .logo-wrapper h1{
 	margin: 0px;
@@ -40,7 +39,7 @@
 	text-decoration: none;
 	text-transform: uppercase;
 }
-.main-header .container .nav-wrapper ul li.mode-toogle a{
+.main-header .container .nav-wrapper ul li.mode-toogle div{
 	display: inline-block;
 	width: 30px;
 	height: 15px;
@@ -51,7 +50,7 @@
 	transition: all 0.3s ease-in-out;
 	position: relative;
 }
-.main-header .container .nav-wrapper ul li.mode-toogle a span{
+.main-header .container .nav-wrapper ul li.mode-toogle div span{
 	width: 15px;
 	height: 15px;
 	display: inline-block;
@@ -64,10 +63,10 @@
 	box-sizing: border-box;
 	transition: all 0.3s ease-in-out;
 }
-.main-header .container .nav-wrapper ul li.mode-toogle a.active{
+.main-header .container .nav-wrapper ul li.mode-toogle div.active{
 	background-color: var(--text-color);
 }
-.main-header .container .nav-wrapper ul li.mode-toogle a.active span{
+.main-header .container .nav-wrapper ul li.mode-toogle div.active span{
 	background-color: var(--plain-white);
 	border-color: var(--text-color);
 	left:15px;	
@@ -88,4 +87,30 @@
 	height: 150px;
 	width: auto;
 	vertical-align: middle;
+}
+
+
+@media only screen and (max-width: 740px) {
+	.main-header .container{
+		flex-direction: column;
+	}
+	.main-header .logo-wrapper{
+		text-align: center;
+		margin-bottom: 30px;
+	}
+	.main-header .container .logo-wrapper img{
+		height: 110px;
+	}
+	.main-header .container .nav-wrapper ul{
+		flex-wrap: wrap;
+		justify-content: flex-start;
+	}
+	.main-footer .logo-wrapper{
+		width: 100%;		
+		box-sizing: border-box;		
+	}
+	.main-footer .logo-wrapper img{
+		width: 100%;
+		height: auto;
+	}
 }

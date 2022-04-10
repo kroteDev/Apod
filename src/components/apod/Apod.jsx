@@ -1,4 +1,5 @@
 import './apod.css'
+import { Link } from "react-router-dom"
 
 function Apod({ apod }) {
 	const apodId = apod.date.slice(2).replace(/-/g, "")	
@@ -11,6 +12,7 @@ function Apod({ apod }) {
 				<figcaption>{apod.title}</figcaption>
 			</figure>
 			<div className="apod-info">
+				{/* <h2><Link to={`/apod/${apodId}`} key={apodId} >{apod.title}</Link></h2> */}
 				<h2>{apod.title}</h2>
 				<p>{trim_explanation(apod.explanation)}</p>
 				<div className="meta">
