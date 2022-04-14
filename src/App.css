@@ -30,3 +30,23 @@ body{
 	justify-content: center;
 	align-items: center;
 }
+.other-entries{
+	margin: 100px 0px;
+}
+.other-entries h2{
+	margin: 0px;
+	font-size: 70px;
+	font-weight: 600;
+	color: var(--main-nav);
+	position: relative;
+	display: inline-block;
+}
+.other-entries h2:after{
+	content: "";
+	background-color: var(--main-nav);
+	width: 110%;
+	height: 4px;
+	left: 0;
+	bottom: 0;
+	position: absolute;
+}

@@ -1,24 +1,31 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import '../../pages/pages.css'
-import Loading from '../shared/Loading'
+import Loading from '../components/shared/Loading'
+import { useParams } from 'react-router-dom'
+import './pages.css'
+function Apod() {
 
-function Apod() {	
-	const [apod, setApod] = useState({})	
 	const [loading, setLoading] = useState(false)
-  const getApod = async =>{		
+	const [apod, setApod] = useState({})
+	const { apodId } = useParams()	
+
+  const getApod = async =>{
 		setLoading(true)
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NODE_ENV !== 'production'? 'DEMO_KEY' : process.env.REACT_APP_APOD_KEY}&thumbs=true`)
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NODE_ENV !== 'production'? 'DEMO_KEY' : process.env.REACT_APP_APOD_KEY}&date=${apodId}&thumbs=true`)
     .then(function (res) {
       setApod(res.data)      
+			setLoading(false)
     })
     .catch(function (error) {
       console.log(error)
     })
-    .then(function () {						
-			setLoading(false)			
-    })
   }
+
+  useEffect(() => {
+		getApod()
+  },[])
+
+
 	const {
 		copyright,
 		date,
@@ -29,21 +36,21 @@ function Apod() {
 		url		
 	} = apod
 	const apodDateId = date !== undefined ? date.slice(2).replace(/-/g, "") : null	
-
-  useEffect(() => {
-		getApod()
-  },[])
-	if( loading ) return <Loading />
+	
+	if (loading) return <Loading />	
 	return (
-		
 		<div className='apod-page main-content'>
+			
 			{media_type === "image" ?(
 				<figure className="image-wrapper">
 					<img src={url} alt={title} />
 					<figcaption>{title} . Published: { new Date(date).toLocaleDateString() }</figcaption>
 				</figure>	
 			) : (
-				<iframe width="960" height="540" src={url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+				<div className='iframe-wrapper'>
+					<iframe width="1020" height="574" src={url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+					<p>{title} . Published: { new Date(date).toLocaleDateString() }</p>
+				</div>
 			)}			
 			<div className='apod-info'>
 				<h1 className="title">{title}</h1>

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import Loading from '../shared/Loading'
-import Apod from "./Apod"
+import ApodItem from "./ApodItem"
 
-function Apods() {
+function ApodList() {
 	const [apods, setApod] = useState([])
   const [loading, setLoading] = useState(true)
   const getApods = async =>{
@@ -22,17 +22,16 @@ function Apods() {
   }
 
   useEffect(() => {
-   getApods()    
-   console.log()
+		getApods()
   },[])
 	if (loading) return <Loading />
 	return (
 		<>      
 			{apods.map( (apod, index) => (
-				<Apod key={index} apod={apod} />        
+				<ApodItem key={index} apod={apod} />        
 			))}      
 		</>
 	)
 }
 
-export default Apods
+export default ApodList

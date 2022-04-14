@@ -21,3 +21,102 @@
 	font-weight: bold;
 	color: var(--main-nav);	
 }
+
+/* apod Page*/
+.apod-page{
+	padding: 50px 15px;
+}
+.apod-page figure{
+	margin: 0px auto 50px;
+	text-align: center;
+	width: 1020px;
+}
+.apod-page figure img{
+	max-width: 100%;
+	width: 100%;	
+}
+.apod-page figure figcaption{
+	text-align: right;
+	color: var(--text-color);
+	font-style: italic;
+	font-size: 12px;
+}
+.apod-page .iframe-wrapper{
+	margin: 0px auto 50px;
+	text-align: center;
+	width: 1020px;
+}
+.apod-page .iframe-wrapper p{
+	margin: 0px; 
+	text-align: right;
+	color: var(--text-color);
+	font-style: italic;
+	font-size: 12px;
+	max-width: 960px;
+}
+.apod-page .apod-info{
+	max-width: 900px;
+	margin: 0px auto;
+}
+
+.apod-page .apod-info h1{
+	font-size: 35px;
+	font-weight: 600;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	color: var(--plain-black);
+}
+.apod-page .apod-info p.explanation{
+	margin-top: 0px;
+	margin-bottom: 30px;
+	font-size: 16px;
+	line-height: 27px;
+	font-weight: 400;
+	color: var(--plain-black);
+}
+.apod-page .apod-info .meta{
+	display: flex;
+	font-size: 16px;
+	font-weight: 300;
+	color: var(--text-color);
+	font-style: italic;
+	margin-bottom: 50px;	
+}
+.apod-page .apod-info .meta p{
+	margin-right: 30px;
+}
+.apod-page .apod-info .meta label{
+	font-weight: 600;
+	font-style: normal;
+	color: var(--main-nav);
+}
+.apod-page .apod-info .actions{
+	text-align: right;
+}
+.apod-page .apod-info .actions a{
+	display: inline-block;
+	padding: 15px 25px;
+	font-weight: 600;
+	font-size: 16;
+	border: 2px solid transparent;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: all 0.3s ease-in-out;
+}
+.apod-page .apod-info .actions .go-to{
+	color: var(--main-nav);
+	border-color: var(--main-nav);
+	margin-right: 5px;
+}
+.apod-page .apod-info .actions .go-to:hover,
+.apod-page .apod-info .actions .go-to:focus{
+	text-decoration: underline;
+}
+.apod-page .apod-info .actions .download{
+	background-color: var(--main-nav);
+	color: var(--plain-white);
+}
+.apod-page .apod-info .actions .download:hover, 
+.apod-page .apod-info .actions .download:focus{
+	text-decoration: underline;	
+}
