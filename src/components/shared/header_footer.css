@@ -20,6 +20,12 @@
 	flex-grow: 1;
 	text-align: right;
 }
+.main-header .container .nav-wrapper .menu-toggler{
+	display: none;
+	font-size: 18px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
 .main-header .container .nav-wrapper ul{
 	margin: 0px;
 	padding: 0px;
@@ -101,9 +107,38 @@
 	.main-header .container .logo-wrapper img{
 		height: 110px;
 	}
+	.main-header .container .nav-wrapper .menu-toggler{
+		display: block;
+		cursor: pointer;
+	}
 	.main-header .container .nav-wrapper ul{
 		flex-wrap: wrap;
-		justify-content: flex-start;
+		align-items: start;
+		flex-direction: column;
+		overflow: hidden;
+		height: 0;
+		transition: all 0.1s ease-in-out;
+	}
+	.main-header .container .nav-wrapper ul li{
+		opacity: 0;
+		transition: all 0.4s ease-in-out;
+	}	
+	.main-header .container .nav-wrapper ul li{
+		margin-bottom: 10px;
+		width: 100%;
+		text-align: left;
+	}
+	.main-header .container .nav-wrapper ul li a{
+		width: 100%;
+	}
+	.main-header .container .nav-wrapper ul.open{
+		height: 145px;
+	}
+	.main-header .container .nav-wrapper ul.open li{
+		opacity: 1;
+	}
+	.main-header .container .nav-wrapper ul li.mode-toogle{
+		text-align: right;
 	}
 	.main-footer .logo-wrapper{
 		width: 100%;		
@@ -113,4 +148,5 @@
 		width: 100%;
 		height: auto;
 	}
+
 }

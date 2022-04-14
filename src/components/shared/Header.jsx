@@ -6,6 +6,8 @@ import React, {useState} from 'react'
 
 function Header() {
 	const [sitemode, setMode] = useState(false)
+	const [menu, setMenu] = useState(false)
+	const menuToggle = () => { setMenu(!menu) }
 	const change_mode = event =>{
 		// setMode(!sitemode)
 		if(sitemode){
@@ -22,8 +24,9 @@ function Header() {
 				<div className='logo-wrapper'>
 					<h1><Link to="/"><img src={logo} alt="APOD - Logo" /></Link></h1>
 				</div>
-				<div className="nav-wrapper">
-					<ul>
+				<div className="nav-wrapper">						
+					<div onClick={menuToggle} className="menu-toggler">Menu</div>
+					<ul className={menu ? 'open': null} >
 						{/* <li><Link to='/'>Calendar</Link></li> */}
 						<li><a href='https://nasa.gov/' target="_blank" rel="noreferrer">Nasa</a></li>
 						<li><a href='https://apod.nasa.gov/apod' target="_blank" rel="noreferrer">Apod Official Site</a></li>
