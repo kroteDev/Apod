@@ -9,7 +9,7 @@ function Apod() {
 	const [apod, setApod] = useState({})
 	const { apodId } = useParams()	
 
-  const getApod = async =>{
+  const getApod = () =>{
 		setLoading(true)
     axios.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NODE_ENV !== 'production'? 'DEMO_KEY' : process.env.REACT_APP_APOD_KEY}&date=${apodId}&thumbs=true`)
     .then(function (res) {
@@ -23,8 +23,8 @@ function Apod() {
 
   useEffect(() => {
 		getApod()
+		// eslint-disable-next-line
   },[])
-
 
 	const {
 		copyright,
@@ -35,12 +35,11 @@ function Apod() {
 		title,
 		url		
 	} = apod
-	const apodDateId = date !== undefined ? date.slice(2).replace(/-/g, "") : null	
+	const apodDateId = date !== undefined ? date.slice(2).replace(/-/g, "") : null
 	
 	if (loading) return <Loading />	
 	return (
-		<div className='apod-page main-content'>
-			
+		<div className='apod-page main-content'>			
 			{media_type === "image" ?(
 				<figure className="image-wrapper">
 					<img src={url} alt={title} />

@@ -7,7 +7,10 @@
 	--text-color: #54595F;
 	--plain-white: #ffffff;
 	--bg-color: #F9F9F9;
+	--nasa-worm-color: #DB362D;
 	--border-color: #3357E6;
+	--gradient-1: #0B3D91;
+	--gradient-2: #001841;
 	}
 body{
 	margin: 0px;
@@ -49,4 +52,14 @@ body{
 	left: 0;
 	bottom: 0;
 	position: absolute;
+}
+@media only screen and (max-width: 740px) {
+	.other-entries h2{
+		text-align: center;	
+		display: block;
+		font-size: 34px;
+	}
+	.other-entries h2:after{
+		width: 100%;
+	}
 }

@@ -120,3 +120,19 @@
 .apod-page .apod-info .actions .download:focus{
 	text-decoration: underline;	
 }
+
+@media only screen and (max-width: 740px) {
+	.apod-page .iframe-wrapper{
+		width: 100%;
+		height: 430px;
+	}
+	.apod-page figure{
+		width: 100%;
+	}
+}
+@media only screen and (max-width: 400px) {
+	.apod-page .iframe-wrapper{
+		width: 100%;
+		height: 190px;
+	}
+}

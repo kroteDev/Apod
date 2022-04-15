@@ -80,21 +80,75 @@
 
 /*Main footer*/
 .main-footer{
-	background-color: var(--main-nav);
+	background: rgb(0,24,65);
+	background: -moz-linear-gradient(0deg, rgba(0,24,65,1) 0%, rgba(11,61,145,1) 100%);
+	background: -webkit-linear-gradient(0deg, rgba(0,24,65,1) 0%, rgba(11,61,145,1) 100%);
+	background: linear-gradient(0deg, rgba(0,24,65,1) 0%, rgba(11,61,145,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#001841",endColorstr="#0b3d91",GradientType=1);
 	margin-top: 100px;
 	height: 200px;
-}
-.main-footer .logo-wrapper{
-	display: inline-block;
-	padding: 25px 15px;
-	background-color: var(--bg-color);
-}
-.main-footer .logo-wrapper img{
-	height: 150px;
-	width: auto;
-	vertical-align: middle;
+	padding-top: 30px;
+	padding-bottom: 20px;
+	color: var(--plain-white);
 }
 
+.main-footer .container{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.main-footer .container .footer-item{
+	width: 27%;
+	padding-left: 30px;
+	padding-right: 30px;
+	box-sizing: border-box;
+}
+.main-footer .container .footer-item h2{
+	margin-top: 0px;
+	margin-bottom: 20px;
+	font-weight: 600;
+	font-size: 18px;
+}
+.main-footer .container .footer-item ul{
+	margin: 0px;
+	padding: 0px;
+}
+.main-footer .container .footer-item ul li{
+	list-style: none;
+	margin-bottom: 10px;
+}
+.main-footer .container .footer-item ul li a{
+	font-size: 14px;
+	font-weight: 400;
+	text-decoration: none;
+	transition: all 0.3s ease-in-out;
+	color: var(--plain-white);
+}
+.main-footer .container .footer-item ul li a:hover,
+.main-footer .container .footer-item ul li a:focus{
+	text-decoration: underline;
+}
+.main-footer .container .footer-item ul li a:visited{
+	color: var(--plain-white);
+}
+.main-footer .container .footer-item.logo-wrapper{
+	padding-top: 30px;
+}
+.main-footer .container .footer-item.logo-wrapper img{
+	width: 100%;
+}
+.main-footer .container .copyright{
+	width: 100%;
+	text-align: center;
+	font-size: 12px;
+	margin-top: 15px;
+}
+.main-footer .container .copyright a{
+	color: var(--nasa-worm-color);
+	text-decoration: none;
+	font-weight: 600;
+}
 
 @media only screen and (max-width: 740px) {
 	.main-header .container{
@@ -140,13 +194,17 @@
 	.main-header .container .nav-wrapper ul li.mode-toogle{
 		text-align: right;
 	}
-	.main-footer .logo-wrapper{
-		width: 100%;		
-		box-sizing: border-box;		
-	}
-	.main-footer .logo-wrapper img{
-		width: 100%;
+	.main-footer {
 		height: auto;
+	}
+	.main-footer .container{
+		flex-direction: column;
+	}
+	.main-footer .container .footer-item{
+		width: 100%;
+		padding-left: 0px;
+		padding-right: 0px;
+		margin-bottom: 20px;
 	}
 
 }

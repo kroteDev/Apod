@@ -37,6 +37,15 @@
 	color: var(--header-color);
 	font-weight: 600;
 }
+.apod .apod-info h2 a{
+	color: var(--main-nav);
+	text-decoration: none;
+	transition: all 0.3s ease-in-out;
+}
+.apod .apod-info h2 a:hover, 
+.apod .apod-info h2 a:focus{
+	text-decoration: underline;
+}
 .apod .apod-info > p{
 	margin-top: 0px;
 	margin-bottom: 15px;
