@@ -25,6 +25,7 @@
 /* apod Page*/
 .apod-page{
 	padding: 50px 15px;
+	transition: all 0.2s ease-in-out;
 }
 .apod-page figure{
 	margin: 0px auto 50px;
@@ -56,23 +57,23 @@
 }
 .apod-page .apod-info{
 	max-width: 900px;
-	margin: 0px auto;
+	margin: 0px auto;	
 }
 
 .apod-page .apod-info h1{
 	font-size: 35px;
 	font-weight: 600;
 	margin-top: 0px;
-	margin-bottom: 20px;
-	color: var(--plain-black);
+	margin-bottom: 20px;	
+	color: var(--header-color);
 }
 .apod-page .apod-info p.explanation{
 	margin-top: 0px;
 	margin-bottom: 30px;
 	font-size: 16px;
 	line-height: 27px;
-	font-weight: 400;
-	color: var(--plain-black);
+	font-weight: 400;	
+	color: var(--text-color);
 }
 .apod-page .apod-info .meta{
 	display: flex;
@@ -89,6 +90,7 @@
 	font-weight: 600;
 	font-style: normal;
 	color: var(--main-nav);
+	margin-right: 5px;
 }
 .apod-page .apod-info .actions{
 	text-align: right;
@@ -119,6 +121,31 @@
 .apod-page .apod-info .actions .download:hover, 
 .apod-page .apod-info .actions .download:focus{
 	text-decoration: underline;	
+}
+
+/* Dark Mode*/
+body.nightmode .apod-page {
+	background-color: var(--apod-bg-dark);
+}
+body.nightmode .apod-page .apod-info h1{
+	color: var(--plain-white);
+}
+body.nightmode .apod-page figure figcaption,
+body.nightmode .apod-page .apod-info p.explanation{
+	color: var(--text-color-dark);
+}
+body.nightmode .apod-page .apod-info .meta{
+	color: var(--text-color-dark);
+}
+body.nightmode .apod-page .apod-info .meta label{
+	color: var(--blue-color-dark);
+}
+body.nightmode .apod-page .apod-info .actions .go-to{
+	color: var(--blue-color-dark);
+	border-color: var(--blue-color-dark);
+}
+body.nightmode .apod-page .apod-info .actions .download{
+	background-color: var(--blue-color-dark);
 }
 
 @media only screen and (max-width: 740px) {

@@ -2,21 +2,27 @@
 :root {
 
 	/* cores */
-	--main-nav: #0B3D91;	
+	--main-nav: #0B3D91;
+	--main-nav-dark: #242526;
 	--header-color: #000000;
 	--text-color: #54595F;
+	--text-color-dark: #B9B9B9;
 	--plain-white: #ffffff;
+	--apod-bg-dark: #242526;
 	--bg-color: #F9F9F9;
+	--bg-color-dark: #18191A;
 	--nasa-worm-color: #DB362D;
 	--border-color: #3357E6;
+	--blue-color-dark: #0057FF;
 	--gradient-1: #0B3D91;
 	--gradient-2: #001841;
-	}
+}
 body{
 	margin: 0px;
 	padding: 0px;	
 	background-color: var(--bg-color);
 	font-family: 'Poppins', sans-serif;
+	transition: background-color 0.2s ease-in;
 }
 .container {
   margin: 0px auto;
@@ -52,6 +58,11 @@ body{
 	left: 0;
 	bottom: 0;
 	position: absolute;
+}
+
+/* Dark Mode */
+body.nightmode{
+	background-color: var(--bg-color-dark);
 }
 @media only screen and (max-width: 740px) {
 	.other-entries h2{

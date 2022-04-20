@@ -4,6 +4,7 @@
 	margin-bottom: 100px;	
 	padding: 10px 15px;
 	border-bottom: 4px solid var(--border-color);
+	transition: all 0.2s ease-in-out;
 }
 .main-header .container{
 	display: flex;	
@@ -90,6 +91,7 @@
 	padding-top: 30px;
 	padding-bottom: 20px;
 	color: var(--plain-white);
+	transition: all 0.2s ease-in-out;
 }
 
 .main-footer .container{
@@ -149,6 +151,16 @@
 	text-decoration: none;
 	font-weight: 600;
 }
+/*Dark Mode*/
+body.nightmode .main-header{
+	background-color: var(--main-nav-dark);
+}
+body.nightmode .main-footer{
+	background: rgb(24,25,26);
+	background: linear-gradient(0deg, var(--bg-color-dark) 0%, var(--apod-bg-dark) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#001841",endColorstr="#0b3d91",GradientType=1);
+}
+
 
 @media only screen and (max-width: 740px) {
 	.main-header .container{

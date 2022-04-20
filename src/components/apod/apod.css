@@ -6,12 +6,13 @@
 	margin-bottom: 60px;
 	display: flex;
 	position: relative;
+	transition: all 0.2s ease-in-out;
 }
 .apod .image-wrapper{
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-	width: 45%;
+	width: 50%;
 	order: 1;
 }
 .apod .image-wrapper img{
@@ -24,7 +25,7 @@
 	text-indent: -9999px;
 }
 .apod .apod-info{
-	width: 55%;
+	width: 50%;
 	padding-top: 50px;
 	padding-left: 50px;
 	padding-right: 50px;
@@ -38,6 +39,8 @@
 	font-weight: 600;
 }
 .apod .apod-info h2 a{
+	display: inline-block;
+	width: 100%;
 	color: var(--main-nav);
 	text-decoration: none;
 	transition: all 0.3s ease-in-out;
@@ -55,12 +58,14 @@
 }
 .apod .apod-info .meta{
 	display: flex;
+	color: var(--text-color);
 }
 .apod .apod-info .meta p{
 	margin-right: 15px;
 	margin-top: 0px;
 	margin-bottom: 15px;
 	min-width: 160px;
+	font-style: italic;
 }
 .apod .apod-info .meta p:last-child{
 	margin-right: 0px;
@@ -68,6 +73,8 @@
 .apod .apod-info .meta label{
 	color: var(--main-nav);
 	font-weight: 600;
+	font-style: normal;
+	margin-right: 5px;
 }
 .apod:last-child{
 	margin-bottom: 0px;
@@ -114,6 +121,27 @@
 .apod:nth-child(even) .actions{
 	right: auto;
 	left: 0;
+}
+/* Dark Mode */
+body.nightmode .apod{
+	background-color: var(--apod-bg-dark);	
+}
+body.nightmode .apod .apod-info h2 a{
+	color: var(--plain-white);
+}
+body.nightmode .apod .apod-info p{
+	color: var(--text-color-dark);
+}
+body.nightmode .apod .apod-info .meta label{
+	color: var(--blue-color-dark);		
+}
+body.nightmode .apod .actions .go-to{
+	color: var(--blue-color-dark);
+	border-color: var(--blue-color-dark);
+}
+
+body.nightmode .apod .actions .download{
+	background-color: var(--blue-color-dark);
 }
 
 @media only screen and (max-width: 1270px) {
