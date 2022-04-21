@@ -48,7 +48,7 @@ function Apod() {
 		<div className='apod-page main-content error'>
 			<h1>Something Went Wrong!</h1>			
 			<p>
-				{error.code === 400 ? `No APOD found with the given date or the content is no longer available.` : `Service unavailable. Please try again later.`}
+				{error.code === 400 ? `No APOD found with the given date (${apodId}) or the content is no longer available.` : `Service unavailable. Please try again later.`}
 			</p>
 			<p>
 				Click <Link to="/">here</Link> to get back to our home page.
