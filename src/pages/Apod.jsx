@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Loading from '../components/shared/Loading'
 import { useParams } from 'react-router-dom'
@@ -7,6 +8,7 @@ function Apod() {
 
 	const [loading, setLoading] = useState(false)
 	const [apod, setApod] = useState({})
+	const [error, setError] = useState(null)
 	const { apodId } = useParams()	
 
   const getApod = () =>{
@@ -16,8 +18,9 @@ function Apod() {
       setApod(res.data)      
 			setLoading(false)
     })
-    .catch(function (error) {
-      console.log(error)
+    .catch(function (err) {
+      setError(err.response.data)
+			setLoading(false)
     })
   }
 
@@ -25,7 +28,7 @@ function Apod() {
 		getApod()
 		// eslint-disable-next-line
   },[])
-
+	
 	const {
 		copyright,
 		date,
@@ -37,7 +40,21 @@ function Apod() {
 	} = apod
 	const apodDateId = date !== undefined ? date.slice(2).replace(/-/g, "") : null
 	
-	if (loading) return <Loading />	
+	
+
+	if (loading) return <Loading />
+
+	if (error)return(
+		<div className='apod-page main-content error'>
+			<h1>Something Went Wrong!</h1>			
+			<p>
+				{error.code === 400 ? `No APOD found with the given date or the content is no longer available.` : `Service unavailable. Please try again later.`}
+			</p>
+			<p>
+				Click <Link to="/">here</Link> to get back to our home page.
+			</p>
+		</div>
+	)
 	return (
 		<div className='apod-page main-content'>			
 			{media_type === "image" ?(

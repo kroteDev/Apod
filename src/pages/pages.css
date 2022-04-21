@@ -153,6 +153,10 @@ body.nightmode .apod-page .apod-info .actions .download{
 		width: 100%;
 		height: 430px;
 	}
+	.apod-page .iframe-wrapper iframe{
+		width: 100%;
+		height: 100%;
+	}
 	.apod-page figure{
 		width: 100%;
 	}
@@ -161,5 +165,9 @@ body.nightmode .apod-page .apod-info .actions .download{
 	.apod-page .iframe-wrapper{
 		width: 100%;
 		height: 190px;
+	}
+	.apod-page .iframe-wrapper iframe{
+		width: 100%;
+		height: 100%;
 	}
 }

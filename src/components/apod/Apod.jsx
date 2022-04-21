@@ -6,6 +6,8 @@ import Loading from '../shared/Loading'
 function Apod() {	
 	const [apod, setApod] = useState({})	
 	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(null)
+
   const getApod = () =>{		
 		setLoading(true)
     axios.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NODE_ENV !== 'production'? 'DEMO_KEY' : process.env.REACT_APP_APOD_KEY}&thumbs=true`)
@@ -13,8 +15,9 @@ function Apod() {
       setApod(res.data)
 			setLoading(false)
     })
-    .catch(function (error) {
-      console.log(error)
+    .catch(function (err) {
+      setError(err.response.data)
+			setLoading(false)
     })    
   }
 
@@ -35,6 +38,15 @@ function Apod() {
 	const apodDateId = date !== undefined ? date.slice(2).replace(/-/g, "") : null
   
 	if( loading ) return <Loading />
+	
+	if (error)return(
+		<div className='apod-page main-content error'>
+			<h1>Something Went Wrong!</h1>			
+			<p>
+				{error.code === 400 ? `No APOD found with the given date or the content is no longer available.` : `Service unavailable. Please try again later.`}
+			</p>
+		</div>
+	)
 	return (		
 		<div className='apod-page main-content'>
 			{media_type === "image" ?(
