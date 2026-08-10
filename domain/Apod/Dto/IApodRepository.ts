@@ -6,7 +6,7 @@ import {
 
 export interface IApodRepository {
   
-  findMany(start_date?: number, end_date?: number, count?: number): Promise<Result<RequiredFieldsError,ApodDto[]>>
+  findMany(start_date?: string, end_date?: string, count?: number): Promise<Result<RequiredFieldsError,ApodDto[]>>
 
   findByDate(date: string): Promise<Result<NotFoundError, ApodDto>>
 }

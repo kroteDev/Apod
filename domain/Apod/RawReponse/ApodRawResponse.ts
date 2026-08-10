@@ -2,7 +2,7 @@ export class ApodRawReponse {
   title: string
   date: string
   url: string
-  media_type: string
+  media_type: 'image' | 'video'
   explanation: string 
   resource?: any
   hdurl?: string

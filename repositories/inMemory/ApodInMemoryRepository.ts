@@ -1,5 +1,6 @@
-import { Result } from "@/domain/shared/result"
+import { Result, success, error } from "@/domain/shared/result"
 import { ApodDto } from "@/domain/Apod/Dto/ApodDto"
+import { ApodMapper } from "@/adapters/apod/apod_mapper"
 import { IApodRepository } from "@/domain/Apod/Dto/IApodRepository"
 import { ApodRawReponse } from "@/domain/Apod/RawReponse/ApodRawResponse"
 import { RequiredFieldsError, NotFoundError } from "@/domain/shared/errors"
@@ -104,7 +105,14 @@ export class ApodInMemoryRepository implements IApodRepository {
     }
   ]
 
-  async findMany(start_date?: number, end_date?: number, count?: number): Promise<Result<RequiredFieldsError, ApodDto[]>> {
+  //TODO Verificar se o mapper deve ou não rodar aqui, se isso não está ferindo a arquitetura limpa.
+  async findMany(start_date?: string, end_date?: string, count?: number): Promise<Result<RequiredFieldsError, ApodDto[]>> {
+    
+    if(start_date && end_date) {
+      const apodsRaw: ApodRawReponse[] = this.Apods.filter((apod) => (apod.date >= start_date && apod.date <= end_date))
+      return success(apodsRaw.map((apod) => ApodMapper.toDomain(apod)))
+    }
+    // const apods: ApodDto[] = this.Apods.filter
     throw new Error("Method not implemented.")
   }
   
