@@ -42,3 +42,33 @@ export class InvalidDataError extends Error {
     return `${this.field}`
   }
 }
+
+export class InternalServerError extends Error {
+
+  readonly name = "InternalServerError"
+
+  constructor(
+    readonly error: string
+  ) {
+    super()
+  }
+
+  get message(): string {
+    return `Falha ao conectar com o endereço: ${this.error}`
+  }
+}
+
+export class UnauthorizedServerError extends Error {
+
+  readonly name = "UnauthorizedServerError"
+
+  constructor(
+    readonly url: string
+  ) {
+    super()
+  }
+
+  get message(): string {
+    return `Acesso negado no endereço: ${this.url}`
+  }
+}

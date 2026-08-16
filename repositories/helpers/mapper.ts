@@ -2,9 +2,9 @@ import { ApodDto } from "@/domain/Apod/Dto/ApodDto"
 import { GetVideoType } from "@/utils/get-video-type"
 import { ApodRawReponse } from "@/domain/Apod/RawReponse/ApodRawResponse"
 
-export class ApodMapper {
+export class Mapper {
   
-  static toDomain(rawApiResponse: ApodRawReponse): ApodDto {
+  public rawToDomain(rawApiResponse: ApodRawReponse): ApodDto {
     
     const Apod: ApodDto = {      
       title: rawApiResponse.title,

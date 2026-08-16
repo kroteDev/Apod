@@ -1,12 +1,14 @@
 import { Result } from "@/domain/shared/result"
 import { ApodDto } from "@/domain/Apod/Dto/ApodDto"
 import {
-  NotFoundError, RequiredFieldsError
+  NotFoundError,
+  InternalServerError,
+  UnauthorizedServerError
 } from  "@/domain/shared/errors"
 
 export interface IApodRepository {
   
-  findMany(start_date?: string, end_date?: string, count?: number): Promise<Result<RequiredFieldsError,ApodDto[]>>
+  findMany(start_date?: string, end_date?: string, count?: number): Promise<Result<InternalServerError | UnauthorizedServerError,ApodDto[]>>
 
-  findByDate(date: string): Promise<Result<NotFoundError, ApodDto>>
+  findByDate(date: string): Promise<Result<NotFoundError | InternalServerError | UnauthorizedServerError, ApodDto>>
 }
