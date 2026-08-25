@@ -8,7 +8,9 @@ import {
 
 export interface IApodRepository {
   
-  findMany(start_date?: string, end_date?: string, count?: number): Promise<Result<InternalServerError | UnauthorizedServerError,ApodDto[]>>
+  findMany(start_date?: string, end_date?: string): Promise<Result<InternalServerError | UnauthorizedServerError, ApodDto[]>>
 
   findByDate(date: string): Promise<Result<NotFoundError | InternalServerError | UnauthorizedServerError, ApodDto>>
+
+  findRandom(count: number): Promise<Result<InternalServerError | UnauthorizedServerError, ApodDto[]>>
 }
