@@ -1,45 +1,102 @@
+'use server'
+import { IApodApiClient } from "@/domain/shared/IApodApiClient"
+import { Result, success, error } from "@/domain/shared/result"
 import { getSiteConfig, ISiteConfig } from "@/helpers/get-site-config"
+import { 
+  NotFoundError,
+  InternalServerError,
+  UnauthorizedServerError
+} from "@/domain/shared/errors"
+import { ApodRawReponse } from "@/domain/Apod/RawReponse/ApodRawResponse"
 
-// TODO finalizar essa class
-export class ApodApiClient {
+// TODO finalizar essa classe
+export class ApodApiClient implements IApodApiClient {
+  
   private readonly baseUrl: string
   private readonly apiKey: string
 
   constructor() {
-    
+
     const config: ISiteConfig = getSiteConfig()
     this.baseUrl = config.nasa_config.api_url
     this.apiKey = config.nasa_config.api_key
+
   }
 
-  // Method 1: Find by date
-  async getByDate(date: string): Promise<any> {
-    const url = `${this.baseUrl}/planetary/apod?date=${date}&api_key=${this.apiKey}`
-    return this.fetchAndHandle(url)
-  }
-
-  // Method 2: Find by date range
-  async getByDateRange(startDate: string, endDate: string): Promise<any[]> {
-    const url = `${this.baseUrl}/planetary/apod?start_date=${startDate}&end_date=${endDate}&api_key=${this.apiKey}`
-    return this.fetchAndHandle(url)
-  }
-
-  // Method 3: Find random
-  async getRandom(count: number = 1): Promise<any[]> {
-    const url = `${this.baseUrl}/planetary/apod?count=${count}&api_key=${this.apiKey}`
-    return this.fetchAndHandle(url)
-  }
-
-  // Shared HTTP logic
-  private async fetchAndHandle<T>(url: string): Promise<T> {
-    const response = await fetch(url)
+  async getByDate(date: string): Promise<Result<NotFoundError | InternalServerError | UnauthorizedServerError, ApodRawReponse>> {
     
-    if (!response.ok) {
-      if (response.status === 404) throw new Error('HTTP_404')
-      if (response.status === 401) throw new Error('HTTP_401')
-      throw new Error(`HTTP_${response.status}`)
+    const url = `${this.baseUrl}/planetary/apod?date=${date}`
+    const response =  await this.fetchAndHandle(url)
+    
+    if(response.isSuccess()) {      
+     
+      return success(response.value as ApodRawReponse)
+    
     }
-    
-    return response.json()
+    return error(response.value)    
   }
+  
+  async getByDateRange(startDate: string, endDate: string): Promise<Result<InternalServerError | UnauthorizedServerError, ApodRawReponse[]>> {
+    const url = `${this.baseUrl}/planetary/apod?start_date=${startDate}&end_date=${endDate}`
+    const response = await this.fetchAndHandle(url)
+
+    if (response.isSuccess()) {
+      return success(response.value as ApodRawReponse[])
+    }
+
+    if(response.isError() && ! (response.value instanceof NotFoundError) ){
+      return error(response.value)
+    }
+
+  }
+  
+  async getRandom(count: number): Promise<Result<InternalServerError | UnauthorizedServerError, ApodRawReponse[]>> {
+    const url = `${this.baseUrl}/planetary/apod?count=${count}`
+    const response = await this.fetchAndHandle(url)
+
+    if (response.isSuccess()) {
+      return success(response.value as ApodRawReponse[])
+    }
+
+    if(response.isError() && ! (response.value instanceof NotFoundError) ){
+      return error(response.value)
+    }
+  }
+ 
+
+  public async fetchAndHandle(url: string): Promise<Result<NotFoundError | InternalServerError | UnauthorizedServerError, ApodRawReponse | ApodRawReponse[]>> {
+  
+  const headers = new Headers()
+  const requestOptions: RequestInit = {
+    method: "GET",
+    headers: headers,
+    redirect: "follow"
+  }
+  
+  try {
+
+    const response = await fetch(
+      `${url}&api_key=${this.apiKey}`, 
+      requestOptions
+    )
+
+    switch (response.status) {
+      case 200:
+        const data: ApodRawReponse | ApodRawReponse[] = await response.json()
+        return success(data)
+      case 404:
+        return error(new NotFoundError(url))
+      case 401:
+        return error(new UnauthorizedServerError(url))
+      case 500:
+        default:
+        return error(new InternalServerError(url))        
+    }     
+
+  } catch (error) {
+    
+    return error(new InternalServerError(error))
+  }    
 }
+}
+
