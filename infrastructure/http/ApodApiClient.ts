@@ -36,8 +36,8 @@ export class ApodApiClient implements IApodApiClient {
     return error(response.value)    
   }
   
-  async getByDateRange(startDate: string, endDate: string): Promise<Result<InternalServerError | UnauthorizedServerError, ApodRawReponse[]>> {
-    const url = `${this.baseUrl}/planetary/apod?start_date=${startDate}&end_date=${endDate}`
+  async getByDateRange(start_date: string, end_date: string): Promise<Result<InternalServerError | UnauthorizedServerError, ApodRawReponse[]>> {
+    const url = `${this.baseUrl}/planetary/apod?start_date=${start_date}&end_date=${end_date}`
     const response = await this.fetchAndHandle(url)
 
     if (response.isSuccess()) {

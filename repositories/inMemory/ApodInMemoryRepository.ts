@@ -9,8 +9,9 @@ import {
   UnauthorizedServerError
 } from  "@/domain/shared/errors"
 
+// TODO tentar reproduzir os possíveis cenários e erros aqui para os testes
 export class ApodInMemoryRepository implements IApodRepository {
-  
+    
   // TODO pegar os diferentes casos de vídeo e usar para testes
   private readonly Apods: ApodRawReponse[] = [
     {
@@ -132,5 +133,9 @@ export class ApodInMemoryRepository implements IApodRepository {
     }
     
     return error(new NotFoundError(`${date}`))
+  }
+
+  findRandom(count: number): Promise<Result<InternalServerError | UnauthorizedServerError, ApodDto[]>> {
+    throw new Error("Method not implemented.")
   }
 }
