@@ -1,7 +1,25 @@
 @import "tailwindcss";
-@config "../tailwind.config.mjs";
+
+:root {
+  --nasa-blue: #0b3d91;
+  --nasa-blue-light: #3357e6;
+  --nasa-red: #db362d;
+  --gradient-1: #001841;
+  --gradient-2: #0b3d91;
+  --site-background: #f9f9f9;
+  --grey-light: #54595f;
+  --grey-dark: #333333;
+}
 
 @theme inline {
+  --color-nasa-blue: var(--nasa-blue);
+  --color-nasa-blue-light: var(--nasa-blue-light);
+  --color-nasa-red: var(--nasa-red);
+  --color-gradient-1: var(--gradient-1);
+  --color-gradient-2: var(--gradient-2);
+  --color-site-background: var(--site-background);
+  --color-grey-light: var(--grey-light);
+  --color-grey-dark: var(--grey-dark);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

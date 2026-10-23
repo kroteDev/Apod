@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import tailwindConfig from '../../tailwind.config.mjs'
 
 const GLOBALS = readFileSync(fileURLToPath(new URL('../../app/globals.css', import.meta.url)), 'utf8')
 
@@ -18,18 +17,32 @@ const EXPECTED_COLORS: Record<string, string> = {
   'grey-dark': '#333333',
 }
 
+function block(css: string, selector: string): string {
+  const match = css.match(new RegExp(`${selector}\\s*\\{([^}]*)\\}`))
+  return match ? match[1] : ''
+}
+
+function declarations(body: string): Record<string, string> {
+  const entries: Record<string, string> = {}
+
+  for (const match of body.matchAll(/--([\w-]+):\s*([^;]+);/g)) {
+    entries[match[1]] = match[2].trim().toLowerCase()
+  }
+
+  return entries
+}
+
 describe('theme colors', () => {
-  it('defines exactly the expected palette in tailwind.config.mjs', () => {
-    expect(tailwindConfig.theme.extend.colors).toEqual(EXPECTED_COLORS)
+  it('defines exactly the expected palette as CSS variables in :root', () => {
+    expect(declarations(block(GLOBALS, ':root'))).toEqual(EXPECTED_COLORS)
   })
 
-  it('loads the tailwind config from globals.css', () => {
-    expect(GLOBALS).toContain('@config "../tailwind.config.mjs"')
-  })
+  it('maps every color to a utility through @theme inline', () => {
+    const mapped = declarations(block(GLOBALS, '@theme inline'))
+    const expected = Object.fromEntries(
+      Object.keys(EXPECTED_COLORS).map((name) => [`color-${name}`, `var(--${name})`]),
+    )
 
-  it('does not keep the template light/dark variables', () => {
-    expect(GLOBALS).not.toContain('prefers-color-scheme')
-    expect(GLOBALS).not.toContain('--background')
-    expect(GLOBALS).not.toContain('--foreground')
+    expect(Object.fromEntries(Object.entries(mapped).filter(([key]) => key.startsWith('color-')))).toEqual(expected)
   })
 })
