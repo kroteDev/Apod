@@ -1,0 +1,41 @@
+{
+  "site_info": {
+    "title": "APOD",
+    "subtitle": "Imagem astronômica do dia"
+  },
+  "main_nav": {
+    "nasa": "Nasa",
+    "apod": "APOD Site Oficial",
+    "about": "Sobre"
+  },
+  "main_footer": {
+    "follow_me": "Me Siga",
+    "more_about_nasa": "Mais Sobre a Nasa",
+    "nasa": "Nasa",
+    "apod": "Apod",
+    "no_fear_act": "No Fear Act",
+    "made_with_love": "Feito com amor por: "
+  },
+  "home_page": {
+    "page_title": "Um dia desses"
+  },
+  "apod": {
+    "date": "Data",
+    "media_type": "Tipo de Midia",
+    "copyright": "Copyright",
+    "published": "Publicado em",
+    "not_found": "Apod não encontrado"
+  },
+  "about_page": {
+    "page_title": "Sobre",
+    "description_1": "Olá , Meu nome é Bruno (kröteDev), Eu sou um desenvolvedor, full time, faço design nas horas vagas e ama bacon 🥓.",
+    "description_2": "Astronomy Picture of the Day ou APOD É um dos sites mais populares da NASA. É um trabalho financiado pela NASA sob o número de concessão 80NSSC17M0076.",
+    "description_3": "Eu não possuo os direitos autorais das imagens que você vê aqui. Este site foi construído usando uma das APIs da NASA, a API APOD. Para encontrar mais informações, ",
+    "description_4": "Para saber mais sobre a APOD e a NASA, ",
+    "click_here": "clique aqui"
+  },
+  "button": {
+    "go_to_apod": "Ir para o Apod",
+    "download": "Download"
+  }
+}

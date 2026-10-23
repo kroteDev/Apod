@@ -1,0 +1,41 @@
+{
+  "site_info": {
+    "title":"APOD",
+    "subtitle": "Astronomy Picture of the Day"
+  },
+  "main_nav": {
+    "nasa": "Nasa",
+    "apod": "APOD Site Official",
+    "about": "About"
+  },
+  "main_footer": {
+    "follow_me":  "Follow me",
+    "more_about_nasa": "More About Nasa",
+    "nasa": "Nasa",
+    "apod": "Apod",
+    "no_fear_act": "No Fear Act",
+    "made_with_love": "Made with love by: "
+  },
+  "home_page": {
+    "page_title": "One of these days"
+  },
+  "apod": {
+    "date": "Date",
+    "media_type": "Media Type",
+    "copyright": "Copyright",
+    "published": "Published",
+    "not_found": "Apod not found"
+  },
+  "about_page": {
+    "page_title": "About", 
+    "description_1": "Hello Everyone , my name is Bruno (kröteDev), I'Am a developer who does design on free time and loves bacon 🥓.",
+    "description_2": "Astronomy Picture of the Day or APOD is One of the most popular websites at NASA. Is a Work Supported by nasa under ward No. 80NSSC17M0076",
+    "description_3": "I do not own the images you see here. This Website was build using one of the NASA Api's the APOD Api. To know more about, ",
+    "description_4": "To know more about APOD and Nasa please ",
+    "click_here": "click here"
+  },
+  "button": {
+    "go_to_apod": "Go to APOD",
+    "download": "Download"
+  }
+}
