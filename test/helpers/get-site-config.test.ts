@@ -7,7 +7,7 @@ describe('getSiteConfig', () => {
   beforeEach(() => {
     process.env.APOD_BASE_URL = 'https://apod.test'
     process.env.APOD_API_BASE_URL = 'https://api.apod.test'
-    process.env.nasa_config_KEY = 'test-key-123'
+    process.env.NASA_API_KEY = 'test-key-123'
   })
 
   afterEach(() => {
@@ -25,7 +25,7 @@ describe('getSiteConfig', () => {
   it('returns undefined when environment variables are missing', () => {
     delete process.env.APOD_BASE_URL
     delete process.env.APOD_API_BASE_URL
-    delete process.env.nasa_config_KEY
+    delete process.env.NASA_API_KEY
 
     const cfg = getSiteConfig()
     expect(cfg.nasa_config.apod_url).toBeUndefined()
@@ -36,7 +36,7 @@ describe('getSiteConfig', () => {
   it('returns empty strings when environment variables are empty', () => {
     process.env.APOD_BASE_URL = ''
     process.env.APOD_API_BASE_URL = ''
-    process.env.nasa_config_KEY = ''
+    process.env.NASA_API_KEY = ''
 
     const cfg = getSiteConfig()
     expect(cfg.nasa_config.apod_url).toBe('')
