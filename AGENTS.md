@@ -8,7 +8,9 @@ APOD (Astronomy Picture of the Day) showcase built with Next.js. It shows NASA's
 
 Current state:
 - Data layer (API client, mapper, repositories, helpers) is implemented and tested.
-- The UI in `app/` is still the default `create-next-app` page. No page consumes the repository yet.
+- Locale support is in place: `pt-BR` (default) and `en-US`. Every URL is prefixed with the locale (`/pt-BR`, `/en-US`). `proxy.ts` redirects unprefixed or short paths (`/`, `/pt`, `/about`) to the full locale, and `app/[locale]/layout.tsx` returns 404 for anything else.
+- `app/[locale]/page.tsx` is a placeholder used to test locales. The real home, `/apod/[id]`, and `/about` pages are still to be built.
+- The colors, the lib layer that pages will use, and the UI itself are still to be migrated from `.references/Apod-nextjs`.
 
 ## Commands
 
@@ -50,6 +52,13 @@ utils/
   extract-media.ts      Finds the playable media in basic_html, with host allowlist
   get-video-type.ts     URL -> youtube | vimeo | video | null (used by extract-media)
 helpers/get-site-config.ts   Reads APOD_BASE_URL, APOD_API_BASE_URL, NASA_API_KEY
+helpers/internationalization/
+  index.ts              supportedLocales, defaultLocale, Locale, isSupportedLocale
+  get-dictionary.ts     Loads resources/dictionaries/{pt_BR,en_US}.json
+resources/dictionaries/      UI copy per locale (keep both files with the same keys)
+proxy.ts                     Locale redirect (Next 16 name; middleware.ts is deprecated)
+app/[locale]/                Locale-prefixed routes; layout sets <html lang> and the dictionary
+app/providers/dictionary-provider.tsx  Client context with useDictionary()
 test/                        Vitest suites, mirroring the source folders
 ```
 
@@ -88,6 +97,18 @@ These were made deliberately. Do not reverse them without asking the owner.
 10. **No `'use server'`.** The client is server-only code used by repositories, not a Server Action. Next.js only allows async function exports in `'use server'` files, and the client exports a class.
 11. **Typo fixed.** `RawReponse` is now `RawResponse`.
 12. **Video credit label.** Labels such as "Image Credit:" and "Video Credit:" are stripped from `copyright`.
+13. **Locales in the URL.** Supported: `pt-BR` (default) and `en-US`. Every page lives under `app/[locale]/`. Short prefixes (`/pt`, `/en`) redirect to the full locale. Unknown locales return 404. Dictionary keys are shared between the two JSON files, and `en_US.json` must have the same keys as `pt_BR.json`.
+14. **Proxy, not middleware.** The request interceptor is `proxy.ts` with `export function proxy`. Next 16.2 warns that `middleware.ts` is deprecated.
+
+## Adding a locale
+
+1. Add the code to `supportedLocales` in `helpers/internationalization/index.ts`. Keep `defaultLocale` valid.
+2. Create `resources/dictionaries/<xx_YY>.json` with the same keys as `pt_BR.json`. The file name is the locale with `-` replaced by `_`.
+3. Add the loader to `dictionaries` in `helpers/internationalization/get-dictionary.ts`. TypeScript fails without it.
+4. Run `npm run test`. `test/internationalization/` loops over `supportedLocales` and checks that the file exists, the keys match the default locale, and no text is empty. It also checks that `/<lang>` redirects to the full locale.
+5. Run `npm run build` to confirm `generateStaticParams` prerenders the new routes.
+
+Short prefixes (`/es`) redirect to the first supported locale with that language.
 
 ## Conventions
 
@@ -104,6 +125,7 @@ These were made deliberately. Do not reverse them without asking the owner.
 - `Dockerfile` runs `npm run dev`, not a production build. It is not production-ready yet.
 - `playwright.config.js` points to `tests/e2e`, which does not exist. There are no e2e tests yet.
 - `next.config.ts` still has `localhost` and `127.0.0.1` in `remotePatterns`, kept from the starting template.
+- After deleting or moving files under `app/`, run `rm -rf .next` before `npx tsc --noEmit`. Stale generated types in `.next/` otherwise reference the deleted files.
 - The sample fixtures reflect July–October 2026 data. They are fake data, so they can be older than live data without any test failing.
 
 ## CI/CD plan (status)

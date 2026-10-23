@@ -90,6 +90,18 @@ helpers/                  Leitura da configuração do ambiente.
 test/                     Testes Vitest, espelhando a estrutura de pastas.
 ```
 
+## Idiomas
+
+O site suporta `pt-BR` (padrão) e `en-US`. Toda página fica sob o prefixo do idioma (`/pt-BR/...`, `/en-US/...`). Acessos sem prefixo são redirecionados pelo `proxy.ts`, e `/pt` ou `/en` vão para o idioma completo.
+
+Para adicionar um novo idioma (ex.: `es-ES`):
+
+1. Adicione o código em `supportedLocales`, em `helpers/internationalization/index.ts`.
+2. Crie `resources/dictionaries/es_ES.json` com as mesmas chaves de `pt_BR.json`.
+3. Adicione o carregamento no objeto `dictionaries`, em `helpers/internationalization/get-dictionary.ts`. Sem isso o TypeScript acusa erro.
+4. Rode `npm run test`. Os testes verificam se o arquivo existe, se as chaves batem com o idioma padrão e se nenhum texto está vazio. Todos os idiomas são testados automaticamente.
+5. Rode `npm run build`. As rotas do novo idioma são geradas por `generateStaticParams`.
+
 ## Decisões principais
 
 - **Um único endpoint.** Só o endpoint `apod-basic` é usado.
