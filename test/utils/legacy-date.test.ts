@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toLegacyDate } from '../../utils/legacy-date'
+import { toLegacyDate } from '@/utils/legacy-date'
 
 describe('toLegacyDate', () => {
   it('converts an ISO date to the YYMMDD legacy format', () => {

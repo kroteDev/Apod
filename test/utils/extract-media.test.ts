@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { extractMedia } from '../../utils/extract-media'
+import { extractMedia } from '@/utils/extract-media'
 
 const HDURL = 'https://assets.science.nasa.gov/content/dam/science/cds/apod/apod/2026/july/sibling.jpg?w=1920&h=1487'
 const PLACEHOLDER = 'https://assets.science.nasa.gov/dynamicimage/assets/science/astro/programs/cosmic-origins/images/misc/news-thumbnail.png?w=594&h=516'

@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { DictionaryProvider } from "@/app/providers/dictionary-provider"
 import { isSupportedLocale, supportedLocales } from "@/helpers/internationalization"
 import { getDictionary } from "@/helpers/internationalization/get-dictionary"
-import "../globals.css"
+import "@/app/globals.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

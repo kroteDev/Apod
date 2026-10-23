@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 
-const GLOBALS = readFileSync(fileURLToPath(new URL('../../app/globals.css', import.meta.url)), 'utf8')
+const GLOBALS = readFileSync(join(process.cwd(), 'app/globals.css'), 'utf8')
 
 // Palette from the old project (.references/Apod-nextjs/src/app/globals.css),
 // with grey-light (old "paragraph") and grey-dark added.

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { htmlToText } from '../../utils/html-to-text'
+import { htmlToText } from '@/utils/html-to-text'
 
 describe('htmlToText', () => {
   it('returns null for empty input', () => {

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import { getDictionary } from '../../helpers/internationalization/get-dictionary'
-import { defaultLocale, supportedLocales } from '../../helpers/internationalization'
+import { join } from 'node:path'
+import { getDictionary } from '@/helpers/internationalization/get-dictionary'
+import { defaultLocale, supportedLocales } from '@/helpers/internationalization'
 
-const DICTIONARIES_DIR = fileURLToPath(new URL('../../resources/dictionaries/', import.meta.url))
+const DICTIONARIES_DIR = join(process.cwd(), 'resources/dictionaries/')
 
 function fileFor(locale: string): string {
   return `${DICTIONARIES_DIR}${locale.replace('-', '_')}.json`

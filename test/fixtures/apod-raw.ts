@@ -1,4 +1,4 @@
-import { ApodRawResponse } from '../../domain/Apod/RawResponse/ApodRawResponse'
+import { ApodRawResponse } from '@/domain/Apod/RawResponse/ApodRawResponse'
 
 export const IMAGE_RAW: ApodRawResponse = {
   post_id: 1258485,

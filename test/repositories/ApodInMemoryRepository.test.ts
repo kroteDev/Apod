@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { ApodInMemoryRepository } from '../../repositories/inMemory/ApodInMemoryRepository'
-import { NotFoundError } from '../../domain/shared/errors'
+import { ApodInMemoryRepository } from '@/repositories/inMemory/ApodInMemoryRepository'
+import { NotFoundError } from '@/domain/shared/errors'
 
 describe('ApodInMemoryRepository', () => {
   const repository = new ApodInMemoryRepository()

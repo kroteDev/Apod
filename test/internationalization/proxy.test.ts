@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { NextRequest } from 'next/server'
-import { proxy } from '../../proxy'
-import { defaultLocale, supportedLocales } from '../../helpers/internationalization'
+import { proxy } from '@/proxy'
+import { defaultLocale, supportedLocales } from '@/helpers/internationalization'
 
 const BASE = 'http://localhost:3000'
 

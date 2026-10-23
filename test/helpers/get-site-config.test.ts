@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { getSiteConfig } from '../../helpers/get-site-config'
+import { getSiteConfig } from '@/helpers/get-site-config'
 
 describe('getSiteConfig', () => {
   const OLD_ENV = { ...process.env }

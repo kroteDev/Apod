@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest'
-import { NasaApiRepository } from '../../repositories/NasaApi/NasaApiRepository'
-import { IApodApiClient } from '../../domain/shared/IApodApiClient'
-import { success, error } from '../../domain/shared/result'
-import { InternalServerError, NotFoundError } from '../../domain/shared/errors'
-import { IMAGE_RAW, YOUTUBE_RAW } from '../fixtures/apod-raw'
+import { NasaApiRepository } from '@/repositories/NasaApi/NasaApiRepository'
+import { IApodApiClient } from '@/domain/shared/IApodApiClient'
+import { success, error } from '@/domain/shared/result'
+import { InternalServerError, NotFoundError } from '@/domain/shared/errors'
+import { IMAGE_RAW, YOUTUBE_RAW } from '@/test/fixtures/apod-raw'
 
 function fakeClient(overrides: Partial<IApodApiClient> = {}): IApodApiClient {
   return {

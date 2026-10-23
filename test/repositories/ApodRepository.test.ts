@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { ApodRepository } from '../../repositories/ApodRepository'
-import { ApodInMemoryRepository } from '../../repositories/inMemory/ApodInMemoryRepository'
-import { NasaApiRepository } from '../../repositories/NasaApi/NasaApiRepository'
+import { ApodRepository } from '@/repositories/ApodRepository'
+import { ApodInMemoryRepository } from '@/repositories/inMemory/ApodInMemoryRepository'
+import { NasaApiRepository } from '@/repositories/NasaApi/NasaApiRepository'
 
 describe('ApodRepository.getInstance', () => {
   afterEach(() => {

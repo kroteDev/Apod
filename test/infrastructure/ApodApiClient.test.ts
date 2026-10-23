@@ -1,7 +1,7 @@
 import { ApodApiClient } from '@/infrastructure/http/ApodApiClient'
 import { NotFoundError, InternalServerError, UnauthorizedServerError, InvalidDataError } from '@/domain/shared/errors'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { IMAGE_RAW } from '../fixtures/apod-raw'
+import { IMAGE_RAW } from '@/test/fixtures/apod-raw'
 
 const BASE = 'https://science.nasa.gov/wp-json/wp/v2/apod-basic'
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { Mapper } from '../../repositories/helpers/mapper'
-import { IMAGE_RAW, MP4_RAW, YOUTUBE_RAW } from '../fixtures/apod-raw'
+import { Mapper } from '@/repositories/helpers/mapper'
+import { IMAGE_RAW, MP4_RAW, YOUTUBE_RAW } from '@/test/fixtures/apod-raw'
 
 describe('Mapper', () => {
   const mapper = new Mapper()

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { GetVideoType } from '../../utils/get-video-type'
+import { GetVideoType } from '@/utils/get-video-type'
 
 describe('GetVideoType', () => {
   it('detects YouTube embed URLs', () => {

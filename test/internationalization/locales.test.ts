@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { defaultLocale, isSupportedLocale, supportedLocales } from '../../helpers/internationalization'
+import { defaultLocale, isSupportedLocale, supportedLocales } from '@/helpers/internationalization'
 
 describe('internationalization config', () => {
   it('includes the default locale among the supported locales', () => {
