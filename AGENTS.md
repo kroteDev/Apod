@@ -10,7 +10,8 @@ Current state:
 - Data layer (API client, mapper, repositories, helpers) is implemented and tested.
 - Locale support is in place: `pt-BR` (default) and `en-US`. Every URL is prefixed with the locale (`/pt-BR`, `/en-US`). `proxy.ts` redirects unprefixed or short paths (`/`, `/pt`, `/about`) to the full locale, and `app/[locale]/layout.tsx` returns 404 for anything else.
 - `app/[locale]/page.tsx` is a placeholder used to test locales. The real home, `/apod/[id]`, and `/about` pages are still to be built.
-- The colors, the lib layer that pages will use, and the UI itself are still to be migrated from `.references/Apod-nextjs`.
+- Colors are migrated: the palette lives in `tailwind.config.mjs` (`theme.extend.colors`, for example `text-nasa-blue`, `bg-site-background`). `app/globals.css` loads it with `@config`. `test/styles/theme.test.ts` locks the values.
+- The lib layer that pages will use, and the UI itself, are still to be migrated from `.references/Apod-nextjs`.
 
 ## Commands
 
@@ -57,6 +58,7 @@ helpers/internationalization/
   get-dictionary.ts     Loads resources/dictionaries/{pt_BR,en_US}.json
 resources/dictionaries/      UI copy per locale (keep both files with the same keys)
 proxy.ts                     Locale redirect (Next 16 name; middleware.ts is deprecated)
+tailwind.config.mjs          Color palette (theme.extend.colors), loaded by app/globals.css
 app/[locale]/                Locale-prefixed routes; layout sets <html lang> and the dictionary
 app/providers/dictionary-provider.tsx  Client context with useDictionary()
 test/                        Vitest suites, mirroring the source folders
@@ -99,6 +101,8 @@ These were made deliberately. Do not reverse them without asking the owner.
 12. **Video credit label.** Labels such as "Image Credit:" and "Video Credit:" are stripped from `copyright`.
 13. **Locales in the URL.** Supported: `pt-BR` (default) and `en-US`. Every page lives under `app/[locale]/`. Short prefixes (`/pt`, `/en`) redirect to the full locale. Unknown locales return 404. Dictionary keys are shared between the two JSON files, and `en_US.json` must have the same keys as `pt_BR.json`.
 14. **Proxy, not middleware.** The request interceptor is `proxy.ts` with `export function proxy`. Next 16.2 warns that `middleware.ts` is deprecated.
+15. **Palette in `tailwind.config.mjs`, light only.** The colors come from the old project, with the old `paragraph` renamed to `grey-light` and `grey-dark` added. They live in `tailwind.config.mjs` rather than in CSS `@theme`, because the owner asked for a config file. The template's light/dark CSS variables were removed, since the old site had no dark mode. The page background is `bg-site-background` in the `[locale]` layout. The font is still Arial in `body`. Poppins from the old project is not migrated yet.
+16. **Tailwind config is `.mjs`.** Tailwind loads `@config` with Node, and a `.ts` file without `"type": "module"` in `package.json` prints a warning. This matches `postcss.config.mjs`.
 
 ## Adding a locale
 
