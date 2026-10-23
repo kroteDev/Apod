@@ -1,6 +1,6 @@
 # APOD
 
-Este repositório é um projeto demonstrativo (showcase) das minhas habilidades como desenvolvedor full‑stack. A aplicação consome a API APOD (Astronomy Picture of the Day) da NASA para exibir imagens e informações diárias, e serve como exemplo de arquitetura limpa, testes automatizados e um front-end moderno com Tailwind CSS.
+Este repositório é um projeto demonstrativo (showcase) das minhas habilidades como desenvolvedor full‑stack. A aplicação consome a API APOD (Astronomy Picture of the Day) da NASA para exibir a imagem ou vídeo do dia, com a explicação, e serve como exemplo de arquitetura limpa, testes automatizados e um front-end moderno com Tailwind CSS.
 
 **Objetivos**
 - Mostrar competências em front-end e back-end.
@@ -9,53 +9,104 @@ Este repositório é um projeto demonstrativo (showcase) das minhas habilidades 
 - Interface simples e moderna usando Tailwind CSS.
 
 **Tecnologias**
-- Next.js
+- Next.js 16 (App Router)
+- React 19
 - TypeScript
-- Tailwind CSS
+- Tailwind CSS 4
 - Vitest (testes)
-- Vite (ferramentas de desenvolvimento)
+- ESLint (lint)
+- Playwright (configurado, ainda sem testes e2e)
 
-**Variáveis de ambiente**
-Defina as variáveis necessárias para a API da NASA antes de rodar a aplicação:
+**Fonte dos dados**
 
-- `APOD_BASE_URL` — URL base usada no front para imagens/recursos públicos.
-- `APOD_API_BASE_URL` — endpoint da API (ex.: `https://api.nasa.gov/planetary/apod`).
-- `NASA_API_KEY` — chave de API da NASA.
+A aplicação usa o endpoint oficial do site de ciência da NASA (`science.nasa.gov/wp-json/wp/v2/apod-basic`). O endpoint antigo (`api.nasa.gov/planetary/apod`) foi desativado e não é mais usado.
 
-Exemplo (bash):
+- Consulta por data: `/apod-basic/{YYMMDD}`.
+- Lista e intervalos: paginação com `page` e `per_page` (máximo 25), filtros `date_from` e `date_to` no formato `YYMMDD`.
+- Não é necessária chave de API.
 
-Ver arquivo .env.example
-```bash
-export APOD_BASE_URL="https://apod.example.com"
-export APOD_API_BASE_URL="https://api.nasa.gov/planetary/apod"
-export NASA_API_KEY="SUA_CHAVE_AQUI"
-```
+## Variáveis de ambiente
 
-**Como rodar**
+Crie um arquivo `.env` na raiz (use `.env.example` como base):
 
-Instale dependências:
+| Variável | Descrição |
+|---|---|
+| `APOD_BASE_URL` | URL pública do site APOD (ex.: `https://apod.nasa.gov`). |
+| `APOD_API_BASE_URL` | Endpoint da API: `https://science.nasa.gov/wp-json/wp/v2/apod-basic`. |
+| `NASA_API_KEY` | Opcional. Lida pela configuração, mas ainda não usada pelo cliente. Será removida quando o endpoint antigo sair de vez. |
+
+## Como rodar
+
+Instale as dependências (Node 22, conforme `.nvmrc`):
 
 ```bash
 npm install
 ```
 
-Rodar em modo de desenvolvimento:
+Rode em modo de desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Executar testes:
+Gere o build de produção:
 
 ```bash
-npx vitest
+npm run build
 ```
 
-**Estrutura principal até o momento**
-- `app/` — rotas e componentes de página (Next.js).
-- `domain/` — modelos de domínio e contratos (DTOs, repositórios).
-- `helpers/` — helpers e utilitários compartilhados.
-- `repositories/` — implementações de repositórios (inMemory, integração com NASA API).
-- `usecase/` — casos de uso / lógica de aplicação.
-- `utils/` — utilitários pequenos (ex.: `get-video-type`).
-- `test/` — testes e utilitários de teste.
+## Testes e qualidade
+
+| Comando | O que faz |
+|---|---|
+| `npm run test` | Roda todos os testes uma vez (Vitest). |
+| `npm run test:watch` | Roda os testes em modo watch durante o desenvolvimento. |
+| `npm run typecheck` | Verifica os tipos com TypeScript (`tsc --noEmit`). |
+| `npm run lint` | Roda o ESLint. |
+| `npm run ci` | Executa lint, typecheck e testes, na mesma ordem usada pelo pipeline. |
+
+Os testes não acessam a rede: usam fixtures com payloads reais e repositórios falsos. Por isso são determinísticos e podem rodar em qualquer ambiente de CI.
+
+### Plano de CI/CD
+
+Já pronto:
+- `npm run ci` é o portão único de qualidade (lint, tipos e testes).
+- `npm run build` foi validado localmente.
+
+Próximos passos:
+1. Workflow do GitHub Actions em `pull_request` e em `push` para `main`, rodando `npm ci` e `npm run ci` no Node 22.
+2. Job de build (`npm run build`) depois do CI.
+3. Deploy: ainda não definido. O `Dockerfile` precisa de um estágio de produção antes disso (hoje ele roda `npm run dev`).
+
+## Estrutura
+
+```
+app/                      Rotas e páginas (Next.js). Ainda com a página padrão.
+domain/                   Contratos e modelos puros (DTOs, interfaces, Result, erros).
+infrastructure/http/      Cliente HTTP da API da NASA (datas, paginação, retries, cache).
+repositories/             Implementações: API da NASA, dados em memória e mapper.
+utils/                    Helpers: data legada, HTML para texto, extração de mídia.
+helpers/                  Leitura da configuração do ambiente.
+test/                     Testes Vitest, espelhando a estrutura de pastas.
+```
+
+## Decisões principais
+
+- **Um único endpoint.** Só o endpoint `apod-basic` é usado.
+- **Texto puro.** Explicação, créditos e textos alternativos chegam sem HTML. Links externos não chegam à interface; o usuário é direcionado à página oficial da APOD.
+- **Mídia com lista de domínios permitidos.** Imagens vêm de `assets.science.nasa.gov`. Vídeos vêm de iframes do YouTube ou do Vimeo, ou de arquivos `.mp4` no mesmo domínio da NASA. Qualquer outra origem é descartada.
+- **Paginação exposta.** `findMany` recebe `page` e `per_page` e devolve os totais, porque intervalos longos precisam de mais de uma página.
+- **Sem sorteio aleatório.** O endpoint novo não oferece essa função.
+- **Cache e retries.** Datas recentes são revalidadas a cada hora e datas antigas a cada 7 dias. Erros 5xx, 429 e de rede são repetidos até 3 vezes.
+
+Os detalhes completos estão no arquivo `AGENTS.md`, que também serve de contexto para agentes de IA.
+
+## Status
+
+- Camada de dados (cliente, mapper, repositórios e helpers) implementada e testada.
+- Interface ainda é a página padrão do Next.js: a próxima etapa é ligar as páginas ao repositório.
+- `Dockerfile` ainda roda em modo de desenvolvimento.
+
+## Autor
+
+Bruno Oliveira (krotedev)
