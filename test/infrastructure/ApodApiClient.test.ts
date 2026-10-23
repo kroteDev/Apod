@@ -1,5 +1,5 @@
+import { ApodApiClient } from '@/infrastructure/http/ApodApiClient'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { ApodApiClient } from '../../infrastructure/http/ApodApiClient'
 
 describe('ApodApiClient', () => {
   const OLD_ENV = { ...process.env }
