@@ -6,16 +6,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'apod.nasa.gov',
-      },
-      {
-        protocol: 'https',
-        hostname: 'apod.nasa.gov',
+        hostname: 'assets.science.nasa.gov',
         pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'youtube.com',
+        hostname: 'img.youtube.com',
+        pathname: '/vi/**',
       },
       {
         protocol: 'http',
