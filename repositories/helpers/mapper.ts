@@ -4,7 +4,7 @@ import { extractMedia } from "@/utils/extract-media"
 import { htmlToText } from "@/utils/html-to-text"
 
 const EXPLANATION_LABEL = /^Explanation:\s*/i
-const CREDIT_LABEL = /^(?:Image\s+)?Credit(?:\s*&\s*Copyright)?\s*:\s*|^Copyright\s*:\s*/i
+const CREDIT_LABEL = /^(?:(?:Image|Video)\s+)?Credit(?:\s*&\s*Copyright)?\s*:\s*|^Copyright\s*:\s*/i
 
 function plainCredit(html: string | undefined): string | null {
   const text = htmlToText(html)?.replace(CREDIT_LABEL, "").trim()

@@ -26,6 +26,11 @@ describe('Mapper', () => {
     expect(dto.copyright).toBe('Mike Selby')
   })
 
+  it('removes the video credit label', () => {
+    const dto = mapper.rawToDomain({ ...YOUTUBE_RAW, copyright: 'Video Credit: Gateway to Astronaut Photography , NASA' })
+    expect(dto.copyright).toBe('Gateway to Astronaut Photography , NASA')
+  })
+
   it('falls back to credit when copyright is empty and returns null when both are empty', () => {
     expect(mapper.rawToDomain({ ...IMAGE_RAW, copyright: '' }).copyright).toBe('Mike Selby')
     expect(mapper.rawToDomain({ ...IMAGE_RAW, copyright: '', credit: '' }).copyright).toBeNull()
