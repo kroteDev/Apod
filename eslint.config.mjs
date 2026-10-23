@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Reference copies of other projects, not part of this codebase:
+    ".references/**",
   ]),
 ]);
 
