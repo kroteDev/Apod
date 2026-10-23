@@ -1,16 +1,15 @@
 import { Result } from "@/domain/shared/result"
-import { ApodDto } from "@/domain/Apod/Dto/ApodDto"
+import { ApodDto, ApodPage } from "@/domain/Apod/Dto/ApodDto"
 import {
   NotFoundError,
   InternalServerError,
-  UnauthorizedServerError
-} from  "@/domain/shared/errors"
+  UnauthorizedServerError,
+  InvalidDataError
+} from "@/domain/shared/errors"
 
 export interface IApodRepository {
-  
-  findMany(start_date?: string, end_date?: string): Promise<Result<InternalServerError | UnauthorizedServerError, ApodDto[]>>
 
-  findByDate(date: string): Promise<Result<NotFoundError | InternalServerError | UnauthorizedServerError, ApodDto>>
+  findMany(start_date?: string, end_date?: string, page?: number, per_page?: number): Promise<Result<InvalidDataError | InternalServerError | UnauthorizedServerError, ApodPage>>
 
-  findRandom(count: number): Promise<Result<InternalServerError | UnauthorizedServerError, ApodDto[]>>
+  findByDate(date: string): Promise<Result<NotFoundError | InvalidDataError | InternalServerError | UnauthorizedServerError, ApodDto>>
 }

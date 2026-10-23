@@ -4,13 +4,10 @@ import { ApodInMemoryRepository } from "@/repositories/inMemory/ApodInMemoryRepo
 
 export class ApodRepository {
   public static getInstance(): IApodRepository {
-    switch (process.env.NODE_ENV) {
-      case 'production':
-      case 'test':
-        return new ApodInMemoryRepository()
-      case 'development':
-      default:
-        return new NasaApiRepository()
+    if (process.env.NODE_ENV === 'test') {
+      return new ApodInMemoryRepository()
     }
+
+    return new NasaApiRepository()
   }
 }
