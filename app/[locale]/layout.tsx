@@ -6,7 +6,6 @@ import { Header } from "@/app/components/header"
 import { Footer } from "@/app/components/footer"
 import { defaultLocale, isSupportedLocale, supportedLocales } from "@/helpers/internationalization"
 import { getDictionary } from "@/helpers/internationalization/get-dictionary"
-import { THEME_STORAGE_KEY } from "@/helpers/theme"
 import "@/app/globals.css"
 
 const geistSans = Geist({

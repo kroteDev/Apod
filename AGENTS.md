@@ -63,10 +63,9 @@ app/[locale]/                Locale-prefixed routes; layout sets <html lang> and
 app/providers/dictionary-provider.tsx  Client context with useDictionary()
 app/lib/apod.ts              Server functions for pages: getApodByDate, getApodPage (return Result)
 app/components/header.tsx    Client header: responsive menu, nav, locale links, ThemeToggle
-app/components/theme-toggle.tsx  Client toggle: adds/removes the `dark` class on <html>, saves to localStorage
+app/components/theme-toggle.tsx  Client toggle button. Only changes its own icon for now (no theme applied yet)
 app/components/footer.tsx    Server footer (reads the dictionary itself)
 app/components/icons/        Heroicons (outline, 24px) as inline components with currentColor
-helpers/theme.ts             THEME_STORAGE_KEY ("theme")
 app/[locale]/about/page.tsx  Static about page from about_page in the dictionary
 test/                        Vitest suites, mirroring the source folders
 ```
@@ -111,7 +110,7 @@ These were made deliberately. Do not reverse them without asking the owner.
 15. **Palette as CSS variables, light only for now.** The colors come from the old project, with the old `paragraph` renamed to `grey-light` and `grey-dark` added. They are `--<name>` variables in `:root` (`app/globals.css`), and `@theme inline` maps each one to `--color-<name>` so utilities like `text-nasa-blue` use `var(--nasa-blue)`. The page background is `bg-site-background` in the `[locale]` layout. The font is still Arial in `body`. Poppins from the old project is not migrated yet.
 16. **Dark mode later means changing variables.** To add dark mode, redefine the `:root` variables under `.dark` in `app/globals.css` (see decision 18). Utilities read the variables at runtime, so components do not change. Do not add `tailwind.config` color entries, because they are compiled to fixed values and cannot switch per theme.
 17. **Lib without `'use server'` for now.** `app/lib/` is called from server components, so it needs no directive. Functions that a client component calls must be in a `'use server'` file. That file must not return `Result` instances: class instances cannot be serialized across the server action boundary. It must return plain objects (for example `{ ok: true, value }` or `{ ok: false, error }`).
-18. **Dark mode via the `dark` class.** The choice is saved in `localStorage` under `theme`. A small inline script in the `[locale]` layout adds the `dark` class before the page paints, so there is no flash. `ThemeToggle` reads the class with `useSyncExternalStore`, so it does not need a `useEffect`. Dark color values go under `.dark` in `app/globals.css`.
+18. **Theme toggle is a placeholder.** `ThemeToggle` only switches its own icon. It does not change `<html>` and does not use `localStorage`. The pre-paint script and `suppressHydrationWarning` were removed in `ba1a09a` to find hydration errors. A headless browser check (dev server, both locales, toggle, reload) showed no console errors or hydration warnings. When the theme is applied later, dark colors go under `.dark` in `app/globals.css`, and the way to avoid a flash on load must be decided then.
 
 ## Adding a locale
 
@@ -159,7 +158,7 @@ Ask the owner before adding a workflow or deploy secrets.
 ## Known gaps and next steps
 
 - The home and `/apod/[date]` pages do not use `app/lib/apod.ts` yet. Wiring them is the next product step.
-- The theme toggle is wired, but it has not been tested in a browser, and there are no dark color values yet. When adding them, put them under `.dark` in `app/globals.css`. The toggle sets the `dark` class, not a media query.
+- The theme toggle only changes its own icon. Applying a theme (dark colors under `.dark` in `app/globals.css`, and a saved choice) is still to be decided. See decision 18.
 - The about page links both paragraphs to the APOD about page. Its copy in `about_page.description_3` still mentions the NASA API, which is the old API. Check the wording with the owner.
 - `Dockerfile` needs a multi-stage production build (`npm run build` then `npm start` or standalone output).
 - Add runtime validation of the NASA payload if the endpoint changes often (currently a shallow type check in `parseRawApod`).
