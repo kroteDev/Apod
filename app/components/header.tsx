@@ -23,7 +23,7 @@ export function Header({ locale }: { locale: string }) {
   const linkClass = "block px-4 py-3 font-bold uppercase text-white hover:underline md:inline-block"
 
   return (
-    <header className="border-b-4 border-nasa-blue-light bg-nasa-blue px-4 py-3 text-white">
+    <header className="border-b-4 border-nasa-blue-light bg-nasa-blue px-4 py-3 text-white mb-6">
       <div className="container mx-auto flex flex-wrap items-center justify-between gap-x-4">
         <Link href={`/${locale}`} className="flex h-12 w-40 items-center text-xl font-bold uppercase">
           {dictionary.site_info.title}
