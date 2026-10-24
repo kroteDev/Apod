@@ -9,7 +9,8 @@ APOD (Astronomy Picture of the Day) showcase built with Next.js. It shows NASA's
 Current state:
 - Data layer (API client, mapper, repositories, helpers) is implemented and tested.
 - Locale support is in place: `pt-BR` (default) and `en-US`. Every URL is prefixed with the locale (`/pt-BR`, `/en-US`). `proxy.ts` redirects unprefixed or short paths (`/`, `/pt`, `/about`) to the full locale, and `app/[locale]/layout.tsx` returns 404 for anything else.
-- `app/[locale]/page.tsx` is a placeholder used to test locales. The real home, `/apod/[id]`, and `/about` pages are still to be built.
+- `app/[locale]/page.tsx` is a placeholder used to test locales. The real home and `/apod/[date]` pages are still to be built. `/about` is built (static, from the dictionary).
+- Header and footer are in `app/components/` and render in the `[locale]` layout. The header has a responsive menu, locale links, and a theme toggle. The logo is a text placeholder.
 - Colors are migrated: the palette lives in `app/globals.css` as CSS variables in `:root`, mapped to utilities in `@theme inline` (for example `text-nasa-blue`, `bg-site-background`). `test/styles/theme.test.ts` locks the values.
 - The lib layer is in place: `app/lib/apod.ts` (`getApodByDate`, `getApodPage`). Pages should call it, not the repository. The UI itself is still to be migrated from `.references/Apod-nextjs`.
 
@@ -61,6 +62,12 @@ proxy.ts                     Locale redirect (Next 16 name; middleware.ts is dep
 app/[locale]/                Locale-prefixed routes; layout sets <html lang> and the dictionary
 app/providers/dictionary-provider.tsx  Client context with useDictionary()
 app/lib/apod.ts              Server functions for pages: getApodByDate, getApodPage (return Result)
+app/components/header.tsx    Client header: responsive menu, nav, locale links, ThemeToggle
+app/components/theme-toggle.tsx  Client toggle: adds/removes the `dark` class on <html>, saves to localStorage
+app/components/footer.tsx    Server footer (reads the dictionary itself)
+app/components/icons/        Heroicons (outline, 24px) as inline components with currentColor
+helpers/theme.ts             THEME_STORAGE_KEY ("theme")
+app/[locale]/about/page.tsx  Static about page from about_page in the dictionary
 test/                        Vitest suites, mirroring the source folders
 ```
 
@@ -102,8 +109,9 @@ These were made deliberately. Do not reverse them without asking the owner.
 13. **Locales in the URL.** Supported: `pt-BR` (default) and `en-US`. Every page lives under `app/[locale]/`. Short prefixes (`/pt`, `/en`) redirect to the full locale. Unknown locales return 404. Dictionary keys are shared between the two JSON files, and `en_US.json` must have the same keys as `pt_BR.json`.
 14. **Proxy, not middleware.** The request interceptor is `proxy.ts` with `export function proxy`. Next 16.2 warns that `middleware.ts` is deprecated.
 15. **Palette as CSS variables, light only for now.** The colors come from the old project, with the old `paragraph` renamed to `grey-light` and `grey-dark` added. They are `--<name>` variables in `:root` (`app/globals.css`), and `@theme inline` maps each one to `--color-<name>` so utilities like `text-nasa-blue` use `var(--nasa-blue)`. The page background is `bg-site-background` in the `[locale]` layout. The font is still Arial in `body`. Poppins from the old project is not migrated yet.
-16. **Dark mode later means changing variables.** To add dark mode, redefine the `:root` variables under the dark condition in `app/globals.css`. Utilities read the variables at runtime, so components do not change. Do not add `tailwind.config` color entries, because they are compiled to fixed values and cannot switch per theme.
+16. **Dark mode later means changing variables.** To add dark mode, redefine the `:root` variables under `.dark` in `app/globals.css` (see decision 18). Utilities read the variables at runtime, so components do not change. Do not add `tailwind.config` color entries, because they are compiled to fixed values and cannot switch per theme.
 17. **Lib without `'use server'` for now.** `app/lib/` is called from server components, so it needs no directive. Functions that a client component calls must be in a `'use server'` file. That file must not return `Result` instances: class instances cannot be serialized across the server action boundary. It must return plain objects (for example `{ ok: true, value }` or `{ ok: false, error }`).
+18. **Dark mode via the `dark` class.** The choice is saved in `localStorage` under `theme`. A small inline script in the `[locale]` layout adds the `dark` class before the page paints, so there is no flash. `ThemeToggle` reads the class with `useSyncExternalStore`, so it does not need a `useEffect`. Dark color values go under `.dark` in `app/globals.css`.
 
 ## Adding a locale
 
@@ -150,7 +158,9 @@ Ask the owner before adding a workflow or deploy secrets.
 
 ## Known gaps and next steps
 
-- The UI does not use `app/lib/apod.ts` yet. Wiring pages (home, `/apod/[date]`, list) is the next product step.
+- The home and `/apod/[date]` pages do not use `app/lib/apod.ts` yet. Wiring them is the next product step.
+- The theme toggle is wired, but it has not been tested in a browser, and there are no dark color values yet. When adding them, put them under `.dark` in `app/globals.css`. The toggle sets the `dark` class, not a media query.
+- The about page links both paragraphs to the APOD about page. Its copy in `about_page.description_3` still mentions the NASA API, which is the old API. Check the wording with the owner.
 - `Dockerfile` needs a multi-stage production build (`npm run build` then `npm start` or standalone output).
 - Add runtime validation of the NASA payload if the endpoint changes often (currently a shallow type check in `parseRawApod`).
 - Playwright e2e setup is unused.
