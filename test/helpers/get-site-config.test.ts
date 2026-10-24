@@ -22,15 +22,15 @@ describe('getSiteConfig', () => {
     expect(cfg.nasa_config.api_key).toBe('test-key-123')
   })
 
-  it('returns undefined when environment variables are missing', () => {
+  it('falls back to the public defaults when environment variables are missing', () => {
     delete process.env.APOD_BASE_URL
     delete process.env.APOD_API_BASE_URL
     delete process.env.NASA_API_KEY
 
     const cfg = getSiteConfig()
-    expect(cfg.nasa_config.apod_url).toBeUndefined()
-    expect(cfg.nasa_config.api_url).toBeUndefined()
-    expect(cfg.nasa_config.api_key).toBeUndefined()
+    expect(cfg.nasa_config.apod_url).toBe('https://apod.nasa.gov')
+    expect(cfg.nasa_config.api_url).toBe('https://science.nasa.gov/wp-json/wp/v2/apod-basic')
+    expect(cfg.nasa_config.api_key).toBe('')
   })
 
   it('returns empty strings when environment variables are empty', () => {
