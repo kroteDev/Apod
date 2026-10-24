@@ -24,6 +24,24 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@layer components {
+  .btn-base {
+    @apply inline-block border-2 px-5 py-3.5 text-lg font-semibold uppercase hover:underline;
+  }
+
+  .metadata {
+    @apply flex flex-wrap gap-x-7 py-4 font-extralight italic text-grey-light lg:flex-nowrap;
+  }
+
+  .metadata dt {
+    @apply mr-2 inline font-bold not-italic text-nasa-blue;
+  }
+
+  .metadata dd {
+    @apply inline;
+  }
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

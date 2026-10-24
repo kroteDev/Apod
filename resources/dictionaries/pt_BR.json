@@ -27,7 +27,10 @@
     "media_type": "Tipo de Midia",
     "copyright": "Copyright",
     "published": "Publicado em",
-    "not_found": "Apod não encontrado"
+    "not_found": "Apod não encontrado",
+    "media_type_image": "Imagem",
+    "media_type_video": "Vídeo",
+    "media_unavailable": "Não foi possível exibir a mídia deste dia. Veja a publicação original no site da NASA."
   },
   "about_page": {
     "page_title": "Sobre",

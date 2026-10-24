@@ -27,7 +27,10 @@
     "media_type": "Media Type",
     "copyright": "Copyright",
     "published": "Published",
-    "not_found": "Apod not found"
+    "not_found": "Apod not found",
+    "media_type_image": "Image",
+    "media_type_video": "Video",
+    "media_unavailable": "The media for this day cannot be displayed. See the original post on the NASA site."
   },
   "about_page": {
     "page_title": "About", 
