@@ -120,11 +120,11 @@ server {
 ## Estrutura
 
 ```
-app/                      Rotas e páginas (Next.js). Ainda com a página padrão.
+app/                      Rotas e páginas (Next.js). Sobre e a página de uma APOD (`/apod/[data]`) estão prontas; a home ainda é provisória.
 domain/                   Contratos e modelos puros (DTOs, interfaces, Result, erros).
 infrastructure/http/      Cliente HTTP da API da NASA (datas, paginação, retries, cache).
 repositories/             Implementações: API da NASA, dados em memória e mapper.
-utils/                    Helpers: data legada, HTML para texto, extração de mídia.
+utils/                    Helpers: data legada, formatação de data, HTML para texto, extração de mídia.
 helpers/                  Leitura da configuração do ambiente.
 test/                     Testes Vitest, espelhando a estrutura de pastas.
 ```

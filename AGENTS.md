@@ -9,7 +9,7 @@ APOD (Astronomy Picture of the Day) showcase built with Next.js. It shows NASA's
 Current state:
 - Data layer (API client, mapper, repositories, helpers) is implemented and tested.
 - Locale support is in place: `pt-BR` (default) and `en-US`. Every URL is prefixed with the locale (`/pt-BR`, `/en-US`). `proxy.ts` redirects unprefixed, short, or unsupported locale paths (`/`, `/pt`, `/about`, `/fr-FR/about`) to a supported locale, and `app/[locale]/layout.tsx` redirects to the default locale if an unsupported locale gets through.
-- `app/[locale]/page.tsx` is a placeholder used to test locales. The real home and `/apod/[date]` pages are still to be built. `/about` is built (static, from the dictionary).
+- `app/[locale]/page.tsx` is a placeholder used to test locales. The real home page is still to be built. `/about` is built (static, from the dictionary). `/apod/[date]` is built (`app/[locale]/apod/[date]/page.tsx`): media, metadata, actions, and a localized 404.
 - Header and footer are in `app/components/` and render in the `[locale]` layout. The header has a responsive menu, locale links, and a theme toggle. The logo is a text placeholder.
 - Colors are migrated: the palette lives in `app/globals.css` as CSS variables in `:root`, mapped to utilities in `@theme inline` (for example `text-nasa-blue`, `bg-site-background`). `test/styles/theme.test.ts` locks the values.
 - The lib layer is in place: `app/lib/apod.ts` (`getApodByDate`, `getApodPage`). Pages should call it, not the repository. The UI itself is still to be migrated from `.references/Apod-nextjs`.
@@ -67,6 +67,10 @@ app/components/theme-toggle.tsx  Client toggle button. Only changes its own icon
 app/components/footer.tsx    Server footer (reads the dictionary itself)
 app/components/icons/        Heroicons (outline, 24px) as inline components with currentColor
 app/[locale]/about/page.tsx  Static about page from about_page in the dictionary
+app/[locale]/apod/[date]/page.tsx  One APOD day: getApodByDate, notFound() for missing or invalid dates, rethrows other errors, metadata for social cards
+app/[locale]/not-found.tsx   Localized 404 for locale routes (client, reads the dictionary from context)
+app/components/apod/         APOD media (figure with 80vh cap, video or iframe, unavailable notice) and actions (permalink, image download)
+utils/format-date.ts         formatApodDate: short date in the current locale, always UTC
 app/api/health/route.ts      GET /api/health for the compose healthcheck and the post-deploy smoke test
 Dockerfile, docker-compose.yml  Standalone production image. Ports come from .env (APP_PORT, APP_INTERNAL_PORT)
 .github/workflows/ci-cd.yml  ci, build, and deploy to the droplet on push to main
@@ -161,7 +165,7 @@ Ask the owner before changing workflow secrets or the deploy target.
 
 ## Known gaps and next steps
 
-- The home and `/apod/[date]` pages do not use `app/lib/apod.ts` yet. Wiring them is the next product step.
+- The home page does not use `app/lib/apod.ts` yet. `/apod/[date]` does. The home is the next product step.
 - The theme toggle only changes its own icon. Applying a theme (dark colors under `.dark` in `app/globals.css`, and a saved choice) is still to be decided. See decision 18.
 - The about page links both paragraphs to the APOD about page. Its copy in `about_page.description_3` still mentions the NASA API, which is the old API. Check the wording with the owner.
 - Add runtime validation of the NASA payload if the endpoint changes often (currently a shallow type check in `parseRawApod`).
