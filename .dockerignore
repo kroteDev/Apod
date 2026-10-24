@@ -4,7 +4,15 @@ out
 build
 .git
 .gitignore
-README.md
+.github
+.env*
+!.env.example
+.references
+coverage
+*.md
+AGENTS.md
 Dockerfile
+docker-compose*
 .dockerignore
+playwright.config.js
 test
