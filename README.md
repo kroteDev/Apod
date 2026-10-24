@@ -67,16 +67,55 @@ npm run build
 
 Os testes não acessam a rede: usam fixtures com payloads reais e repositórios falsos. Por isso são determinísticos e podem rodar em qualquer ambiente de CI.
 
-### Plano de CI/CD
+### CI/CD e deploy
 
-Já pronto:
-- `npm run ci` é o portão único de qualidade (lint, tipos e testes).
-- `npm run build` foi validado localmente.
+O workflow `.github/workflows/ci-cd.yml` roda em todo pull request e em todo push para `main`:
 
-Próximos passos:
-1. Workflow do GitHub Actions em `pull_request` e em `push` para `main`, rodando `npm ci` e `npm run ci` no Node 22.
-2. Job de build (`npm run build`) depois do CI.
-3. Deploy: ainda não definido. O `Dockerfile` precisa de um estágio de produção antes disso (hoje ele roda `npm run dev`).
+| Job | Quando roda | O que faz |
+|---|---|---|
+| `ci` | PR e `main` | `npm ci` e `npm run ci` (lint, tipos e testes), no Node de `.nvmrc`. |
+| `build` | depois de `ci` | `npm run build`. |
+| `deploy` | só em push para `main`, depois de `ci` e `build` | Conecta por SSH no droplet, roda `git reset --hard origin/main` e `docker compose up -d --build`, e faz um teste de fumaça em `https://apod.krotedev.com.br/api/health`. |
+
+Se algum job falhar, o deploy não acontece.
+
+Segredos do GitHub (Settings > Secrets and variables > Actions):
+- `DROPLET_HOST`, `DROPLET_USER` e `DROPLET_SSH_KEY`.
+
+Configuração do droplet (uma vez só):
+1. Clone o repositório em `/var/www/projects/apod`.
+2. Crie o `.env` na raiz do projeto, com as variáveis abaixo.
+3. Configure o Nginx para `apod.krotedev.com.br` (exemplo abaixo) e emita o certificado com `sudo certbot --nginx -d apod.krotedev.com.br`.
+4. Suba o container pela primeira vez: `docker compose up -d --build`.
+
+Variáveis do `.env`. O `docker-compose.yml` não tem portas fixas: tudo vem daqui.
+
+| Variável | Exemplo | Para que serve |
+|---|---|---|
+| `APOD_BASE_URL` | `https://apod.nasa.gov` | Link oficial da APOD. |
+| `APOD_API_BASE_URL` | `https://science.nasa.gov/wp-json/wp/v2/apod-basic` | Endpoint da API. |
+| `NASA_API_KEY` | `...` | Mantida na configuração, ainda não usada. |
+| `APP_PORT` | `3001` | Porta publicada no host. O Nginx aponta para ela. |
+| `APP_INTERNAL_PORT` | `3000` | Porta do Next.js dentro do container. |
+
+Para testar o Docker localmente, defina `APP_PORT` e `APP_INTERNAL_PORT` no `.env` e rode `docker compose up --build`. Depois, `curl http://localhost:3001/api/health` deve responder `{"ok":true}`.
+
+Exemplo de bloco do Nginx (o Certbot acrescenta o TLS):
+
+```nginx
+server {
+    server_name apod.krotedev.com.br;
+
+    location / {
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
 
 ## Estrutura
 
@@ -117,7 +156,7 @@ Os detalhes completos estão no arquivo `AGENTS.md`, que também serve de contex
 
 - Camada de dados (cliente, mapper, repositórios e helpers) implementada e testada.
 - Interface ainda é a página padrão do Next.js: a próxima etapa é ligar as páginas ao repositório.
-- `Dockerfile` ainda roda em modo de desenvolvimento.
+- `Dockerfile` de produção (multi-stage, Node 22, usuário não-root) e deploy automático pelo GitHub Actions. Veja a seção CI/CD.
 
 ## Autor
 
