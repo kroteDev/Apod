@@ -20,7 +20,8 @@
     "made_with_love": "Made with love by: "
   },
   "home_page": {
-    "page_title": "One of these days"
+    "page_title": "One of these days",
+    "empty": "No APOD available right now."
   },
   "apod": {
     "date": "Date",
@@ -42,6 +43,7 @@
   },
   "button": {
     "go_to_apod": "Go to APOD",
-    "download": "Download"
+    "download": "Download",
+    "read_more": "Read more"
   }
 }

@@ -1,5 +1,7 @@
+// @vitest-environment jsdom
 import { describe, it, expect } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { ApodVideo } from '@/app/components/apod/apod-video'
 import { ApodDto } from '@/domain/Apod/Dto/ApodDto'
 import { getDictionary } from '@/helpers/internationalization/get-dictionary'
@@ -58,5 +60,38 @@ describe('ApodVideo', () => {
     expect(html).not.toContain('<iframe')
     expect(html).not.toContain('<video')
     expect(html).toContain(pt.apod.media_unavailable)
+  })
+
+  it('shows a skeleton over the iframe until it loads', async () => {
+    const pt = await getDictionary('pt-BR')
+    const { container } = render(<ApodVideo apod={youtube} dictionary={pt} />)
+
+    expect(container.querySelector('[aria-hidden="true"]')).not.toBeNull()
+
+    fireEvent.load(container.querySelector('iframe')!)
+
+    expect(container.querySelector('[aria-hidden="true"]')).toBeNull()
+    expect(container.querySelector('iframe')!.className).toContain('opacity-100')
+  })
+
+  it('shows a skeleton over the mp4 until its metadata loads', async () => {
+    const pt = await getDictionary('pt-BR')
+    const { container } = render(<ApodVideo apod={mp4} dictionary={pt} />)
+
+    expect(container.querySelector('[aria-hidden="true"]')).not.toBeNull()
+
+    fireEvent(container.querySelector('video')!, new Event('loadedmetadata'))
+
+    expect(container.querySelector('[aria-hidden="true"]')).toBeNull()
+  })
+
+  it('shows the unavailable message when the mp4 fails', async () => {
+    const pt = await getDictionary('pt-BR')
+    const { container } = render(<ApodVideo apod={mp4} dictionary={pt} />)
+
+    fireEvent.error(container.querySelector('video')!)
+
+    expect(screen.getByText(pt.apod.media_unavailable)).not.toBeNull()
+    expect(container.querySelector('video')).toBeNull()
   })
 })

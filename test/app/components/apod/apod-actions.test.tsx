@@ -52,6 +52,16 @@ describe('ApodActions', () => {
     expect(html).not.toContain(`>${pt.button.download}<`)
   })
 
+  it('links to the internal detail page instead of the permalink when one is given', async () => {
+    const pt = await getDictionary('pt-BR')
+    const html = renderToStaticMarkup(<ApodActions apod={image} dictionary={pt} detailHref="/pt-BR/apod/2026-07-03" />)
+
+    expect(html).toContain('href="/pt-BR/apod/2026-07-03"')
+    expect(html).toContain(pt.button.read_more)
+    expect(html).not.toContain(pt.button.go_to_apod)
+    expect(html).not.toContain(`href="${image.permalink}"`)
+  })
+
   it('does not offer a download for an image without a media URL', async () => {
     const pt = await getDictionary('pt-BR')
     const html = renderToStaticMarkup(<ApodActions apod={{ ...image, media_url: null }} dictionary={pt} />)

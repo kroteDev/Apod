@@ -14,7 +14,7 @@ describe('ApodFigure', () => {
     const html = renderToStaticMarkup(<ApodFigure apod={image} dictionary={pt} locale="pt-BR" />)
 
     expect(html).toContain(`src="${image.media_url?.replaceAll('&', '&amp;')}"`)
-    expect(html).toContain('class="mx-auto block h-auto max-h-[80vh] w-auto max-w-full"')
+    expect(html).toContain('mx-auto block h-auto max-h-[80vh] w-auto max-w-full')
     expect(html).toContain('loading="lazy"')
     expect(html).toContain('decoding="async"')
   })

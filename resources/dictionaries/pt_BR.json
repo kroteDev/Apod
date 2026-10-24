@@ -20,7 +20,8 @@
     "made_with_love": "Feito com amor por: "
   },
   "home_page": {
-    "page_title": "Um dia desses"
+    "page_title": "Um dia desses",
+    "empty": "Nenhuma APOD disponível no momento."
   },
   "apod": {
     "date": "Data",
@@ -42,6 +43,7 @@
   },
   "button": {
     "go_to_apod": "Ir para o Apod",
-    "download": "Download"
+    "download": "Download",
+    "read_more": "Ler mais"
   }
 }

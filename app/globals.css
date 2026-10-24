@@ -40,6 +40,15 @@
   .metadata dd {
     @apply inline;
   }
+
+  .apod-card:nth-of-type(even) .image-wrapper {
+    @apply lg:order-2;
+  }
+
+  .apod-card:nth-of-type(even) .info {
+    @apply lg:order-1;
+  }
+
 }
 
 body {

@@ -13,4 +13,11 @@ describe('shared component classes', () => {
     expect(layer).toContain('.metadata dt')
     expect(layer).toContain('.metadata dd')
   })
+
+  it('places the alternating card layout inside @layer components', () => {
+    const layer = GLOBALS.match(/@layer components\s*\{([\s\S]*?)\n\}/)?.[1] ?? ''
+
+    expect(layer).toContain('.apod-card:nth-of-type(even) .image-wrapper')
+    expect(layer).toContain('.apod-card:nth-of-type(even) .info')
+  })
 })
