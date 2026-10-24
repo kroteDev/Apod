@@ -2,8 +2,11 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Geist, Geist_Mono } from "next/font/google"
 import { DictionaryProvider } from "@/app/providers/dictionary-provider"
+import { Header } from "@/app/components/header"
+import { Footer } from "@/app/components/footer"
 import { isSupportedLocale, supportedLocales } from "@/helpers/internationalization"
 import { getDictionary } from "@/helpers/internationalization/get-dictionary"
+import { THEME_STORAGE_KEY } from "@/helpers/theme"
 import "@/app/globals.css"
 
 const geistSans = Geist({
@@ -44,9 +47,21 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.classList.add("dark")}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-site-background">
-        <DictionaryProvider value={dictionary}>{children}</DictionaryProvider>
+        <DictionaryProvider value={dictionary}>
+          <Header locale={locale} />
+          {children}
+          <Footer locale={locale} />
+        </DictionaryProvider>
       </body>
     </html>
   )

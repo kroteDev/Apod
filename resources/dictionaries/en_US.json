@@ -6,7 +6,10 @@
   "main_nav": {
     "nasa": "Nasa",
     "apod": "APOD Site Official",
-    "about": "About"
+    "about": "About",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "toggle_theme": "Toggle theme"
   },
   "main_footer": {
     "follow_me":  "Follow me",
