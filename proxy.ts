@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { defaultLocale, isSupportedLocale, supportedLocales } from '@/helpers/internationalization'
+import { defaultLocale, isLocaleLike, isSupportedLocale, supportedLocales } from '@/helpers/internationalization'
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -10,12 +10,16 @@ export function proxy(request: NextRequest) {
   }
 
   const url = request.nextUrl.clone()
+  const rest = pathname.slice(firstSegment.length + 1)
   const language = supportedLocales.find((locale) => locale.split('-')[0] === firstSegment)
 
-  // "/pt/..." -> "/pt-BR/...", otherwise "/..." -> "/pt-BR/..."
-  url.pathname = language
-    ? `/${language}${pathname.slice(firstSegment.length + 1)}`
-    : `/${defaultLocale}${pathname === '/' ? '' : pathname}`
+  if (language) {
+    url.pathname = `/${language}${rest}`
+  } else if (isLocaleLike(firstSegment)) {
+    url.pathname = `/${defaultLocale}${rest}`
+  } else {
+    url.pathname = `/${defaultLocale}${pathname === '/' ? '' : pathname}`
+  }
 
   return NextResponse.redirect(url)
 }

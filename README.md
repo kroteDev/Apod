@@ -92,7 +92,7 @@ test/                     Testes Vitest, espelhando a estrutura de pastas.
 
 ## Idiomas
 
-O site suporta `pt-BR` (padrão) e `en-US`. Toda página fica sob o prefixo do idioma (`/pt-BR/...`, `/en-US/...`). Acessos sem prefixo são redirecionados pelo `proxy.ts`, e `/pt` ou `/en` vão para o idioma completo.
+O site suporta `pt-BR` (padrão) e `en-US`. Toda página fica sob o prefixo do idioma (`/pt-BR/...`, `/en-US/...`). Acessos sem prefixo são redirecionados pelo `proxy.ts`, e `/pt` ou `/en` vão para o idioma completo. Idiomas não suportados, como `/fr-FR/about`, caem no idioma padrão e mantêm o restante do caminho (`/pt-BR/about`), em vez de dar erro 404.
 
 Para adicionar um novo idioma (ex.: `es-ES`):
 

@@ -22,8 +22,20 @@ describe('proxy locale redirects', () => {
     expect(redirectTarget('/about')).toBe(`${BASE}/${defaultLocale}/about`)
   })
 
-  it('redirects an unknown locale-like prefix to the default locale', () => {
-    expect(redirectTarget('/xx-YY/about')).toBe(`${BASE}/${defaultLocale}/xx-YY/about`)
+  it('replaces an unsupported locale with the default locale and keeps the path', () => {
+    expect(redirectTarget('/fr-FR/about?x=1')).toBe(`${BASE}/${defaultLocale}/about?x=1`)
+  })
+
+  it('replaces an unsupported locale alone with the default locale', () => {
+    expect(redirectTarget('/fr-FR')).toBe(`${BASE}/${defaultLocale}`)
+  })
+
+  it('replaces an unsupported short language with the default locale', () => {
+    expect(redirectTarget('/de/about')).toBe(`${BASE}/${defaultLocale}/about`)
+  })
+
+  it('keeps a path that is not a locale under the default locale', () => {
+    expect(redirectTarget('/foobar/about')).toBe(`${BASE}/${defaultLocale}/foobar/about`)
   })
 
   it('keeps the query string when redirecting', () => {

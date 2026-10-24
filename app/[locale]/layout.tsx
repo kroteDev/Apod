@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { redirect } from "next/navigation"
 import { Geist, Geist_Mono } from "next/font/google"
 import { DictionaryProvider } from "@/app/providers/dictionary-provider"
 import { Header } from "@/app/components/header"
 import { Footer } from "@/app/components/footer"
-import { isSupportedLocale, supportedLocales } from "@/helpers/internationalization"
+import { defaultLocale, isSupportedLocale, supportedLocales } from "@/helpers/internationalization"
 import { getDictionary } from "@/helpers/internationalization/get-dictionary"
 import { THEME_STORAGE_KEY } from "@/helpers/theme"
 import "@/app/globals.css"
@@ -38,7 +38,7 @@ export default async function LocaleLayout({
   const { locale } = await params
 
   if (!isSupportedLocale(locale)) {
-    notFound()
+    redirect(`/${defaultLocale}`)
   }
 
   const dictionary = await getDictionary(locale)
