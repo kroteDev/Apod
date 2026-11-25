@@ -37,7 +37,7 @@ Crie um arquivo `.env` na raiz (use `.env.example` como base):
 
 ## Como rodar
 
-Instale as dependências (Node 22, conforme `.nvmrc`):
+Instale as dependências (Node 26, conforme `.nvmrc`):
 
 ```bash
 npm install
@@ -156,7 +156,7 @@ Os detalhes completos estão no arquivo `AGENTS.md`, que também serve de contex
 
 - Camada de dados (cliente, mapper, repositórios e helpers) implementada e testada.
 - Interface ainda é a página padrão do Next.js: a próxima etapa é ligar as páginas ao repositório.
-- `Dockerfile` de produção (multi-stage, Node 22, usuário não-root) e deploy automático pelo GitHub Actions. Veja a seção CI/CD.
+- `Dockerfile` de produção (multi-stage, Node 26, usuário não-root) e deploy automático pelo GitHub Actions. Veja a seção CI/CD.
 
 ## Autor
 

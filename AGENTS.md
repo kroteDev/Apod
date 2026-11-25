@@ -18,7 +18,7 @@ Current state:
 
 | Command | What it does |
 |---|---|
-| `npm install` | Install dependencies (Node 22, see `.nvmrc`) |
+| `npm install` | Install dependencies (Node 26, see `.nvmrc`) |
 | `npm run dev` | Next.js dev server on port 3000 |
 | `npm run build` | Production build (also runs the TypeScript check) |
 | `npm run test` | Vitest, single run. This is the CI command. |
@@ -152,7 +152,7 @@ Short prefixes (`/es`) redirect to the first supported locale with that language
 
 Done:
 - `.github/workflows/ci-cd.yml` has three jobs. `ci` runs `npm run ci`. `build` runs `npm run build` after `ci`. `deploy` runs only on push to `main`, after both. It connects over SSH to `/var/www/projects/apod`, runs `git reset --hard origin/main` and `docker compose up -d --build`, then smoke-tests `https://apod.krotedev.com.br/api/health` and `/pt-BR`.
-- `Dockerfile` is multi-stage (Node 22, standalone output, non-root user). `docker-compose.yml` has no hardcoded ports.
+- `Dockerfile` is multi-stage (Node 26, standalone output, non-root user). `docker-compose.yml` has no hardcoded ports.
 - Tests are deterministic and offline, so they are safe to run in any runner.
 
 Manual, not in the repo:
